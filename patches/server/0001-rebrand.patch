@@ -1,0 +1,167 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Tue, 15 Mar 2022 01:52:12 +0000
+Subject: [PATCH] rebrand
+
+
+diff --git a/pom.xml b/pom.xml
+index cac99fa931db1efe82112ac87eab457b72aedc0e..cf30fcf0130edc9a6126ccd5f62dc0b107a6650c 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -1,11 +1,11 @@
+ <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+     <modelVersion>4.0.0</modelVersion>
+-    <artifactId>airplane</artifactId>
++    <artifactId>lazinity</artifactId>
+     <packaging>jar</packaging>
+     <version>1.16.5-R0.1-SNAPSHOT</version>
+-    <name>Airplane-Server</name>
+-    <url>https://github.com/TECHNOVE/Airplane/</url>
++    <name>Lazinity-Server</name>
++    <url>https://github.com/KurumiFake/Lazinity/</url>
+ 
+     <properties>
+         <!-- <skipTests>true</skipTests> Paper - This [was] not going to end well -->
+@@ -19,8 +19,8 @@
+     </properties>
+ 
+     <parent>
+-        <groupId>gg.airplane</groupId>
+-        <artifactId>airplane-parent</artifactId>
++        <groupId>me.kurumifake</groupId>
++        <artifactId>lazinity-parent</artifactId>
+         <version>dev-SNAPSHOT</version>
+         <relativePath>../pom.xml</relativePath>
+     </parent>
+@@ -39,14 +39,14 @@
+ 
+     <dependencies>
+         <dependency>
+-            <groupId>gg.airplane</groupId>
+-            <artifactId>airplane-api</artifactId>
++            <groupId>me.kurumifake</groupId>
++            <artifactId>lazinity-api</artifactId>
+             <version>${project.version}</version>
+             <scope>compile</scope>
+         </dependency>
+         <dependency>
+-            <groupId>com.destroystokyo.paper</groupId>
+-            <artifactId>paper-mojangapi</artifactId>
++            <groupId>me.kurumifake</groupId>
++            <artifactId>lazinity-mojangapi</artifactId>
+             <version>${project.version}</version>
+             <scope>compile</scope>
+         </dependency>
+@@ -211,7 +211,7 @@
+ 
+     <!-- This builds a completely 'ready to start' jar with all dependencies inside -->
+     <build>
+-        <finalName>airplane-${minecraft.version}</finalName>
++        <finalName>lazinity-${minecraft.version}</finalName>
+         <defaultGoal>install</defaultGoal> <!-- Paper -->
+         <plugins>
+             <plugin>
+@@ -219,7 +219,7 @@
+                 <artifactId>gitdescribe-maven-plugin</artifactId>
+                 <version>1.3</version>
+                 <configuration>
+-                    <outputPrefix>git-Airplane-</outputPrefix> <!-- Airplane -->
++                    <outputPrefix>git-Lazinity-</outputPrefix> <!-- Airplane --> <!-- Lazinity -->
+                     <scmDirectory>..</scmDirectory>
+                 </configuration>
+                 <executions>
+diff --git a/src/main/java/com/destroystokyo/paper/PaperVersionFetcher.java b/src/main/java/com/destroystokyo/paper/PaperVersionFetcher.java
+index 3c4bd267e8a15f89226379e25c80869c1d4c9106..6f1c08e4a3af69acbbb51ce81e74f1224776aa56 100644
+--- a/src/main/java/com/destroystokyo/paper/PaperVersionFetcher.java
++++ b/src/main/java/com/destroystokyo/paper/PaperVersionFetcher.java
+@@ -29,8 +29,8 @@ public class PaperVersionFetcher implements VersionFetcher {
+     @Nonnull
+     @Override
+     public Component getVersionMessage(@Nonnull String serverVersion) {
+-        String[] parts = serverVersion.substring("git-Airplane-".length()).split("[-\\s]"); // Tuinity
+-        final Component updateMessage = getUpdateStatusMessage("TECHNOVE/Airplane", GITHUB_BRANCH_NAME, parts[0]); // Tuinity
++        String[] parts = serverVersion.substring("git-Lazinity-".length()).split("[-\\s]"); // Tuinity
++        final Component updateMessage = getUpdateStatusMessage("KurumiFake/Lazinity", GITHUB_BRANCH_NAME, parts[0]); // Tuinity
+         final Component history = getHistory();
+ 
+         return history != null ? TextComponent.ofChildren(updateMessage, Component.newline(), history) : updateMessage;
+@@ -71,7 +71,7 @@ public class PaperVersionFetcher implements VersionFetcher {
+         }
+     }
+ 
+-    private static int fetchDistanceFromSiteApi(int jenkinsBuild, @Nullable String siteApiVersion) {
++    /*private static int fetchDistanceFromSiteApi(int jenkinsBuild, @Nullable String siteApiVersion) {
+         if (siteApiVersion == null) { return -1; }
+         try {
+             try (BufferedReader reader = Resources.asCharSource(
+@@ -93,7 +93,7 @@ public class PaperVersionFetcher implements VersionFetcher {
+             e.printStackTrace();
+             return -1;
+         }
+-    }
++    }*/
+ 
+     // Contributed by Techcable <Techcable@outlook.com> in GH-65
+     private static int fetchDistanceFromGitHub(@Nonnull String repo, @Nonnull String branch, @Nonnull String hash) {
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index ea31fb2fa674b4ea0c49efb7eeb001103122ebbd..fe41721f5fc2288df5555c8729e8c28633bdba2f 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -1655,7 +1655,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+     }
+ 
+     public String getServerModName() {
+-        return "Airplane"; // Airplane // Tuinity //Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
++        return "Lazinity"; // Lazinity // Airplane // Tuinity //Paper - Paper > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
+     }
+ 
+     public CrashReport b(CrashReport crashreport) {
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index c62e4f2a0a0697bcc55a3f14a638414b027e44a7..30766096209694ce0140d36c35a5c7ff4e8d0a5e 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -230,7 +230,7 @@ import javax.annotation.Nullable; // Paper
+ import javax.annotation.Nonnull; // Paper
+ 
+ public final class CraftServer implements Server {
+-    private final String serverName = "Airplane"; // Paper // Tuinity // Airplane
++    private final String serverName = "Lazinity"; // Paper // Tuinity // Airplane // Lazinity
+     private final String serverVersion;
+     private final String bukkitVersion = Versioning.getBukkitVersion();
+     private final Logger logger = Logger.getLogger("Minecraft");
+diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
+index 1788d79ea489e446d3d9f541693d4ba3dfc26015..9da65078dc122f5f6659e330536b3eee75f3b37c 100644
+--- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
++++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
+@@ -1,29 +1,9 @@
+ package org.bukkit.craftbukkit.util;
+ 
+-import java.io.IOException;
+-import java.io.InputStream;
+-import java.util.Properties;
+-import java.util.logging.Level;
+-import java.util.logging.Logger;
+ import org.bukkit.Bukkit;
+ 
+ public final class Versioning {
+     public static String getBukkitVersion() {
+-        String result = "Unknown-Version";
+-
+-        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/gg.airplane/airplane-api/pom.properties"); // Tuinity // Airplane
+-        Properties properties = new Properties();
+-
+-        if (stream != null) {
+-            try {
+-                properties.load(stream);
+-
+-                result = properties.getProperty("version");
+-            } catch (IOException ex) {
+-                Logger.getLogger(Versioning.class.getName()).log(Level.SEVERE, "Could not get Bukkit version!", ex);
+-            }
+-        }
+-
+-        return result;
++        return "1.16.5-R0.1-SNAPSHOT"; // Sustopia - Hardcode BukkitVersion
+     }
+ }

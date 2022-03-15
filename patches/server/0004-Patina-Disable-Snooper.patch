@@ -1,0 +1,125 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Tue, 15 Mar 2022 02:20:46 +0000
+Subject: [PATCH] (Patina) Disable Snooper
+
+Original code by PatinaMC, licensed under GNU General Public License v3.0
+You can find the original code on https://github.com/PatinaMC/Patina
+
+// Sustopia - additional removal cuz unused props sus
+
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index fe41721f5fc2288df5555c8729e8c28633bdba2f..3ee67777df455afed93758c6732e6f552f1496ad 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -184,7 +184,7 @@ import org.spigotmc.SlackActivityAccountant; // Spigot
+ import io.papermc.paper.util.PaperJvmChecker; // Paper
+ import io.papermc.paper.event.server.ServerResourcesReloadedEvent; // Paper
+ 
+-public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTask> implements IMojangStatistics, ICommandListener, AutoCloseable {
++public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTask> implements /*IMojangStatistics,*/ ICommandListener, AutoCloseable {
+ 
+     private static MinecraftServer SERVER; // Paper
+     public static final Logger LOGGER = LogManager.getLogger();
+@@ -192,7 +192,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+     public static final WorldSettings c = new WorldSettings("Demo World", EnumGamemode.SURVIVAL, false, EnumDifficulty.NORMAL, false, new GameRules(), DataPackConfiguration.a);
+     public Convertable.ConversionSession convertable;
+     public final WorldNBTStorage worldNBTStorage;
+-    private final MojangStatisticsGenerator snooper = new MojangStatisticsGenerator("server", this, SystemUtils.getMonotonicMillis());
++    //private final MojangStatisticsGenerator snooper = new MojangStatisticsGenerator("server", this, SystemUtils.getMonotonicMillis()); // Patina - Disable Snooper
+     private final List<Runnable> tickables = Lists.newArrayList();
+     private final GameProfilerSwitcher m;
+     private GameProfilerFiller methodProfiler;
+@@ -946,9 +946,9 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+             }
+         }
+ 
+-        if (this.snooper.d()) {
++        /*if (this.snooper.d()) { // Patina - Disable Snooper
+             this.snooper.e();
+-        }
++        }*/
+ 
+         this.dataPackResources.close();
+ 
+@@ -1444,14 +1444,14 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+             //MinecraftServer.LOGGER.debug("Autosave finished"); // Paper
+         //} // Paper
+ 
+-        this.methodProfiler.enter("snooper");
++        /*this.methodProfiler.enter("snooper"); // Patina - Disable Snooper
+         if (((DedicatedServer) this).getDedicatedServerProperties().snooperEnabled && !this.snooper.d() && this.ticks > 100) { // Spigot
+             this.snooper.a();
+         }
+ 
+         if (((DedicatedServer) this).getDedicatedServerProperties().snooperEnabled && this.ticks % 6000 == 0) { // Spigot
+             this.snooper.b();
+-        }
++        }*/
+ 
+         this.methodProfiler.exit();
+ 
+@@ -1798,7 +1798,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+         this.L = s1;
+     }
+ 
+-    @Override
++    /*@Override // Patina - Disable Snooper
+     public void a(MojangStatisticsGenerator mojangstatisticsgenerator) {
+         mojangstatisticsgenerator.a("whitelist_enabled", false);
+         mojangstatisticsgenerator.a("whitelist_count", 0);
+@@ -1830,7 +1830,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+         }
+ 
+         mojangstatisticsgenerator.a("worlds", i);
+-    }
++    }*/
+ 
+     public abstract boolean j();
+ 
+diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
+index 0d27af452fc6a72646a4a168fc827fed5072fab9..30c9125900bd2d6872041ea182192e582d701db9 100644
+--- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
++++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
+@@ -445,12 +445,12 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+         return this.getDedicatedServerProperties().allowNether;
+     }
+ 
+-    @Override
++    /*@Override // Patina - Disable Snooper
+     public void a(MojangStatisticsGenerator mojangstatisticsgenerator) {
+         mojangstatisticsgenerator.a("whitelist_enabled", this.getPlayerList().getHasWhitelist());
+         mojangstatisticsgenerator.a("whitelist_count", this.getPlayerList().getWhitelisted().length);
+         super.a(mojangstatisticsgenerator);
+-    }
++    }*/
+ 
+     public void issueCommand(String s, CommandListenerWrapper commandlistenerwrapper) {
+         this.serverCommandQueue.add(new ServerCommand(s, commandlistenerwrapper));
+diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServerProperties.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServerProperties.java
+index 1fab9b9c7d41a0d2a551096c2c15f741a887fa2d..45ca5d309a17e75202a2f894f7a11b373eea95fd 100644
+--- a/src/main/java/net/minecraft/server/dedicated/DedicatedServerProperties.java
++++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServerProperties.java
+@@ -44,7 +44,7 @@ public class DedicatedServerProperties extends PropertyManager<DedicatedServerPr
+     public final boolean hardcore;
+     public final boolean allowNether;
+     public final boolean spawnMonsters;
+-    public final boolean snooperEnabled;
++    //public final boolean snooperEnabled;
+     public final boolean useNativeTransport;
+     public final boolean enableCommandBlock;
+     public final int spawnProtection;
+@@ -91,11 +91,11 @@ public class DedicatedServerProperties extends PropertyManager<DedicatedServerPr
+         this.hardcore = this.getBoolean("hardcore", false);
+         this.allowNether = this.getBoolean("allow-nether", true);
+         this.spawnMonsters = this.getBoolean("spawn-monsters", true);
+-        if (this.getBoolean("snooper-enabled", true)) {
++        /*if (this.getBoolean("snooper-enabled", true)) {
+             ;
+         }
+ 
+-        this.snooperEnabled = false;
++        this.snooperEnabled = false;*/ // Sustopia - screw snooper server props
+         this.useNativeTransport = this.getBoolean("use-native-transport", true);
+         this.enableCommandBlock = this.getBoolean("enable-command-block", false);
+         this.spawnProtection = this.getInt("spawn-protection", 16);

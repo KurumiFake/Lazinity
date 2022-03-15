@@ -1,0 +1,132 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Tue, 15 Mar 2022 01:22:55 +0000
+Subject: [PATCH] pom changes
+
+- rebrand
+- update dependencies
+
+diff --git a/pom.xml b/pom.xml
+index 7712a8723cddb59829a5181f54098d0bb4083f6e..c6d67fcd25a0550b780ee10722793a776c650cc1 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -3,18 +3,18 @@
+          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+     <modelVersion>4.0.0</modelVersion>
+     <parent>
+-        <groupId>com.destroystokyo.paper</groupId>
+-        <artifactId>paper-parent</artifactId>
++        <groupId>me.kurumifake</groupId>
++        <artifactId>lazinity-parent</artifactId>
+         <version>dev-SNAPSHOT</version>
+     </parent>
+ 
+-    <groupId>com.destroystokyo.paper</groupId>
+-    <artifactId>paper-mojangapi</artifactId>
++    <groupId>me.kurumifake</groupId>
++    <artifactId>lazinity-mojangapi</artifactId>
+     <version>1.16.5-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>Paper-MojangAPI</name>
+-    <url>https://github.com/PaperMC/Paper</url>
++    <name>Lazinity-MojangAPI</name>
++    <url>https://github.com/KurumiFake/Lazinity</url>
+     <description>API additions that utilize Mojang Specific API's</description>
+ 
+     <properties>
+@@ -58,28 +58,28 @@
+         <dependency>
+             <groupId>com.mojang</groupId>
+             <artifactId>brigadier</artifactId>
+-            <version>1.0.17</version>
++            <version>1.0.18</version>
+             <scope>compile</scope>
+         </dependency>
+         <!-- utils -->
+         <dependency>
+             <groupId>it.unimi.dsi</groupId>
+             <artifactId>fastutil</artifactId>
+-            <version>8.2.2</version>
++            <version>8.5.8</version>
+             <scope>provided</scope>
+         </dependency>
+         <!-- annotations -->
+         <dependency>
+             <groupId>org.jetbrains</groupId>
+             <artifactId>annotations</artifactId>
+-            <version>18.0.0</version>
++            <version>23.0.0</version>
+             <scope>provided</scope>
+         </dependency>
+         <!-- testing -->
+         <dependency>
+             <groupId>junit</groupId>
+             <artifactId>junit</artifactId>
+-            <version>4.13.1</version>
++            <version>4.13.2</version>
+             <scope>test</scope>
+         </dependency>
+         <dependency>
+@@ -91,7 +91,7 @@
+         <dependency>
+             <groupId>org.ow2.asm</groupId>
+             <artifactId>asm-tree</artifactId>
+-            <version>7.3.1</version>
++            <version>9.2</version>
+             <scope>test</scope>
+         </dependency>
+     </dependencies>
+@@ -102,7 +102,7 @@
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-compiler-plugin</artifactId>
+-                <version>3.8.1</version>
++                <version>3.10.1</version>
+                 <dependencies>
+                     <!-- we need our custom version as it fixes some bugs on case sensitive file systems -->
+                     <dependency>
+@@ -115,7 +115,7 @@
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-jar-plugin</artifactId>
+-                <version>2.4</version>
++                <version>3.2.2</version>
+                 <configuration>
+                     <archive>
+                         <manifestEntries>
+@@ -127,7 +127,7 @@
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-shade-plugin</artifactId>
+-                <version>3.2.1</version>
++                <version>3.2.4</version>
+                 <executions>
+                     <execution>
+                         <phase>package</phase>
+@@ -156,7 +156,7 @@
+                     <plugin>
+                         <groupId>org.apache.maven.plugins</groupId>
+                         <artifactId>maven-checkstyle-plugin</artifactId>
+-                        <version>3.1.0</version>
++                        <version>3.1.2</version>
+                         <executions>
+                             <execution>
+                                 <phase>process-classes</phase>
+@@ -173,14 +173,14 @@
+                             <dependency>
+                                 <groupId>com.puppycrawl.tools</groupId>
+                                 <artifactId>checkstyle</artifactId>
+-                                <version>8.29</version>
++                                <version>8.45.1</version>
+                             </dependency>
+                         </dependencies>
+                     </plugin>
+                     <plugin>
+                         <groupId>org.codehaus.mojo</groupId>
+                         <artifactId>animal-sniffer-maven-plugin</artifactId>
+-                        <version>1.18</version>
++                        <version>1.20</version>
+                         <executions>
+                             <execution>
+                                 <phase>process-classes</phase>

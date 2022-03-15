@@ -1,0 +1,4 @@
+[submodule "Airplane"]
+	path = Airplane
+	url = https://github.com/KurumiFake/Airplane
+	branch = ver/1.16

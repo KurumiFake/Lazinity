@@ -1,0 +1,99 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Tue, 15 Mar 2022 02:21:34 +0000
+Subject: [PATCH] Remove JVM checkers
+
+- ppl using this thing wont bother upating lel
+- it should work on modern java ver idk :spin:
+
+diff --git a/src/main/java/io/papermc/paper/util/PaperJvmChecker.java b/src/main/java/io/papermc/paper/util/PaperJvmChecker.java
+deleted file mode 100644
+index fdf3ff8894e5e202229d1be52fe3c92ea039ef15..0000000000000000000000000000000000000000
+--- a/src/main/java/io/papermc/paper/util/PaperJvmChecker.java
++++ /dev/null
+@@ -1,48 +0,0 @@
+-package io.papermc.paper.util;
+-
+-import org.apache.logging.log4j.LogManager;
+-import org.apache.logging.log4j.Logger;
+-
+-import java.util.regex.Matcher;
+-import java.util.regex.Pattern;
+-
+-public class PaperJvmChecker {
+-
+-    private static int getJvmVersion() {
+-        String javaVersion = System.getProperty("java.version");
+-        final Matcher matcher = Pattern.compile("(?:1\\.)?(\\d+)").matcher(javaVersion);
+-        if (!matcher.find()) {
+-            LogManager.getLogger().warn("Failed to determine Java version; Could not parse: {}", javaVersion);
+-            return -1;
+-        }
+-
+-        final String version = matcher.group(1);
+-        try {
+-            return Integer.parseInt(version);
+-        } catch (final NumberFormatException e) {
+-            LogManager.getLogger().warn("Failed to determine Java version; Could not parse {} from {}", version, javaVersion, e);
+-            return -1;
+-        }
+-    }
+-
+-    public static void checkJvm() {
+-        if (getJvmVersion() < 16) {
+-            final Logger logger = LogManager.getLogger();
+-            logger.warn("************************************************************");
+-            logger.warn("* WARNING - YOU ARE RUNNING AN OUTDATED VERSION OF JAVA.");
+-            logger.warn("* PAPER WILL STOP BEING COMPATIBLE WITH THIS VERSION OF");
+-            logger.warn("* JAVA WHEN MINECRAFT 1.17 IS RELEASED.");
+-            logger.warn("*");
+-            logger.warn("* Please update the version of Java you use to run Paper");
+-            logger.warn("* to at least Java 16. When Paper for Minecraft 1.17 is");
+-            logger.warn("* released support for versions of Java before 16 will");
+-            logger.warn("* be dropped.");
+-            logger.warn("*");
+-            logger.warn("* Current Java version: {}", System.getProperty("java.version"));
+-            logger.warn("*");
+-            logger.warn("* Check this forum post for more information: ");
+-            logger.warn("*   https://papermc.io/java16");
+-            logger.warn("************************************************************");
+-        }
+-    }
+-}
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index 3ee67777df455afed93758c6732e6f552f1496ad..e9b03b225544e507669dcc2987da163de011c3b1 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -181,7 +181,6 @@ import org.bukkit.event.server.ServerLoadEvent;
+ 
+ import co.aikar.timings.MinecraftTimings; // Paper
+ import org.spigotmc.SlackActivityAccountant; // Spigot
+-import io.papermc.paper.util.PaperJvmChecker; // Paper
+ import io.papermc.paper.event.server.ServerResourcesReloadedEvent; // Paper
+ 
+ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTask> implements /*IMojangStatistics,*/ ICommandListener, AutoCloseable {
+@@ -1091,7 +1090,6 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+                 LOGGER.info("Done ({})! For help, type \"help\"", doneTime);
+                 // Paper end
+ 
+-                PaperJvmChecker.checkJvm(); // Paper jvm version nag
+                 com.tuinity.tuinity.config.TuinityConfig.createWorldSections = false; // Tuinity - don't let plugin created worlds fill our config
+                 org.spigotmc.WatchdogThread.tick(); // Paper
+                 org.spigotmc.WatchdogThread.hasStarted = true; // Paper
+diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
+index fbeca329f62325aa479f968e7f0f04cde341a009..425a5805c1f5835e74293d5cd0633ea5aa9f3841 100644
+--- a/src/main/java/org/bukkit/craftbukkit/Main.java
++++ b/src/main/java/org/bukkit/craftbukkit/Main.java
+@@ -224,12 +224,6 @@ public class Main {
+                 return;
+             }
+ 
+-            float javaVersion = Float.parseFloat(System.getProperty("java.class.version"));
+-            if (javaVersion > 60.0) {
+-                System.err.println("Unsupported Java detected (" + javaVersion + "). Only up to Java 16 is supported.");
+-                if (!Boolean.getBoolean("Paper.IgnoreJavaVersion")) return; // Paper
+-            }
+-
+             try {
+                 // Paper start - Handled by TerminalConsoleAppender
+                 /*
