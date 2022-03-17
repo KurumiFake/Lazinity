@@ -1,0 +1,21 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: William Blake Galbreath <blake.galbreath@gmail.com>
+Date: Mon, 10 May 2021 02:08:53 -0500
+Subject: [PATCH] (Purpur) Fix SPIGOT-6278
+
+Original code by PurpurMC, licensed under MIT.
+You can find the original code on https://github.com/PurpurMC/Purpur
+
+diff --git a/src/main/java/net/minecraft/world/entity/monster/piglin/EntityPiglin.java b/src/main/java/net/minecraft/world/entity/monster/piglin/EntityPiglin.java
+index 99cdcc9a9a7e6227a165c4ef779f8e76a99ec56a..0582817adbf7bb9ab1b8639b4b8efd668b41add7 100644
+--- a/src/main/java/net/minecraft/world/entity/monster/piglin/EntityPiglin.java
++++ b/src/main/java/net/minecraft/world/entity/monster/piglin/EntityPiglin.java
+@@ -183,7 +183,7 @@ public class EntityPiglin extends EntityPiglinAbstract implements ICrossbow {
+ 
+     @Override
+     public boolean isTypeNotPersistent(double d0) {
+-        return !this.isPersistent();
++        return true || !this.isPersistent(); // Purpur - fix SPIGOT-6278
+     }
+ 
+     @Override

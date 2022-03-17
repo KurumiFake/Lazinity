@@ -1,0 +1,32 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: William Blake Galbreath <Blake.Galbreath@GMail.com>
+Date: Sat, 28 Mar 2020 01:51:32 -0500
+Subject: [PATCH] (Purpur) Fix vanilla command permission handler
+
+Original code by PurpurMC, licensed under MIT.
+You can find the original code on https://github.com/PurpurMC/Purpur
+
+diff --git a/src/main/java/com/mojang/brigadier/tree/CommandNode.java b/src/main/java/com/mojang/brigadier/tree/CommandNode.java
+index fd310f5d009801492def4af943322a3b9859f9c6..23d8dc9f562b6fcd07afbe3c3efccbee3ef9a6be 100644
+--- a/src/main/java/com/mojang/brigadier/tree/CommandNode.java
++++ b/src/main/java/com/mojang/brigadier/tree/CommandNode.java
+@@ -35,6 +35,7 @@ public abstract class CommandNode<S> implements Comparable<CommandNode<S>> {
+     private final RedirectModifier<S> modifier;
+     private final boolean forks;
+     private Command<S> command;
++    private String permission = null; public String getPermission() { return permission; } public void setPermission(String permission) { this.permission = permission; } // Purpur
+     // CraftBukkit start
+     public void removeCommand(String name) {
+         children.remove(name);
+diff --git a/src/main/java/org/bukkit/craftbukkit/command/VanillaCommandWrapper.java b/src/main/java/org/bukkit/craftbukkit/command/VanillaCommandWrapper.java
+index c87fa1b2378f25307fff6acbcbc178e5cafd50e4..c91c4bff3d5d6ed2073f2f6501c7f8303f38f9be 100644
+--- a/src/main/java/org/bukkit/craftbukkit/command/VanillaCommandWrapper.java
++++ b/src/main/java/org/bukkit/craftbukkit/command/VanillaCommandWrapper.java
+@@ -87,6 +87,7 @@ public final class VanillaCommandWrapper extends BukkitCommand {
+     }
+ 
+     public static String getPermission(CommandNode<CommandListenerWrapper> vanillaCommand) {
++        if (vanillaCommand.getPermission() != null) return vanillaCommand.getPermission(); // Purpur
+         // Paper start
+         final String commandName;
+         if (vanillaCommand.getRedirect() == null) {

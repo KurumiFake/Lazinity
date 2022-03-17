@@ -1,0 +1,28 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: William Blake Galbreath <Blake.Galbreath@GMail.com>
+Date: Sat, 4 Apr 2020 03:07:59 -0500
+Subject: [PATCH] (Purpur) Skip events if there's no listeners
+
+Original code by PurpurMC, licensed under MIT.
+You can find the original code on https://github.com/PurpurMC/Purpur
+
+diff --git a/src/main/java/net/minecraft/commands/CommandDispatcher.java b/src/main/java/net/minecraft/commands/CommandDispatcher.java
+index 3d255c2ed31d7267bb6cd789702063671d785018..cc5dd4eb7dc1e225352976aa6c4a9d39f11a68bf 100644
+--- a/src/main/java/net/minecraft/commands/CommandDispatcher.java
++++ b/src/main/java/net/minecraft/commands/CommandDispatcher.java
+@@ -376,6 +376,7 @@ public class CommandDispatcher {
+     }
+ 
+     private void runSync(EntityPlayer entityplayer, Collection<String> bukkit, RootCommandNode<ICompletionProvider> rootcommandnode) {
++        if (PlayerCommandSendEvent.getHandlerList().getRegisteredListeners().length > 0) { // Purpur - skip all this crap if there's nothing listening
+         // Paper end - Async command map building
+         new com.destroystokyo.paper.event.brigadier.AsyncPlayerSendCommandsEvent<CommandListenerWrapper>(entityplayer.getBukkitEntity(), (RootCommandNode) rootcommandnode, false).callEvent(); // Paper
+         PlayerCommandSendEvent event = new PlayerCommandSendEvent(entityplayer.getBukkitEntity(), new LinkedHashSet<>(bukkit));
+@@ -388,6 +389,7 @@ public class CommandDispatcher {
+             }
+         }
+         // CraftBukkit end
++        } // Purpur - skip event
+         entityplayer.playerConnection.sendPacket(new PacketPlayOutCommands(rootcommandnode));
+     }
+ 
