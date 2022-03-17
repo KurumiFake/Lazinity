@@ -34,3 +34,21 @@ index d31951e83ff3256420c57eac8f9fc16183f1565d..1a8aaa5f16b3019d1076fbf8df8aa146
  
              targetMSPT = 1000 / targetTPS;
  
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index 18b179e4fac61a2ebda6a8e8beb607996a28c0d8..968f7aa7973aaa74b62ad2bfb1c50e74bd7dc0ad 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -276,10 +276,10 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+     // CraftBukkit end
+     // Spigot start
+ 	// Dripstone start
+-    public static int TPS = 20;
+-    public static int TICK_TIME = 1000000000 / TPS;
++    public static float TPS = 20;
++    public static float TICK_TIME = 1000000000 / TPS;
+ 	public static int TICKS_UNTIL_TPS_RESET = -1;
+-    public static int MS_PER_TICK = 50;
++    public static float MS_PER_TICK = 50;
+ 	// Dripstone end
+ 	// Spigot start
+     private static final int SAMPLE_INTERVAL = 20; // Paper
