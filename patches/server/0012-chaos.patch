@@ -1,0 +1,27 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Thu, 17 Mar 2022 06:53:00 +0000
+Subject: [PATCH] chaos
+
+
+diff --git a/src/main/java/me/noahvdaa/dripstone/SetMaxTPSCommand.java b/src/main/java/me/noahvdaa/dripstone/SetMaxTPSCommand.java
+index d31951e83ff3256420c57eac8f9fc16183f1565d..b65ed1e067d1ca58964586de60beb5fbf3195d90 100644
+--- a/src/main/java/me/noahvdaa/dripstone/SetMaxTPSCommand.java
++++ b/src/main/java/me/noahvdaa/dripstone/SetMaxTPSCommand.java
+@@ -37,13 +37,13 @@ public class SetMaxTPSCommand extends Command {
+                 return true;
+             }
+ 
+-            int targetTPS = Integer.parseInt(args[0]);
++            float targetTPS = Float.parseFloat(args[0]); // Lazinity - :troll:
+ 
+-            // Don't allow negative or zero TPS.
++            /* // Don't allow negative or zero TPS. // Lazinity - nope lemme break my server :troll:
+             if (targetTPS < 1) {
+                 sender.sendMessage("§cThe target TPS must be at least 1.");
+                 return true;
+-            }
++            }*/
+ 
+             targetMSPT = 1000 / targetTPS;
+ 
