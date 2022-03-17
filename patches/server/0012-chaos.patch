@@ -5,9 +5,18 @@ Subject: [PATCH] chaos
 
 
 diff --git a/src/main/java/me/noahvdaa/dripstone/SetMaxTPSCommand.java b/src/main/java/me/noahvdaa/dripstone/SetMaxTPSCommand.java
-index d31951e83ff3256420c57eac8f9fc16183f1565d..b65ed1e067d1ca58964586de60beb5fbf3195d90 100644
+index d31951e83ff3256420c57eac8f9fc16183f1565d..1a8aaa5f16b3019d1076fbf8df8aa1467ac43ee2 100644
 --- a/src/main/java/me/noahvdaa/dripstone/SetMaxTPSCommand.java
 +++ b/src/main/java/me/noahvdaa/dripstone/SetMaxTPSCommand.java
+@@ -26,7 +26,7 @@ public class SetMaxTPSCommand extends Command {
+     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
+         if (!testPermission(sender)) return true;
+ 
+-        int targetMSPT = 50;
++        float targetMSPT = 50;
+         int resetTPSIn = -1;
+ 
+         if (args.length == 0) {
 @@ -37,13 +37,13 @@ public class SetMaxTPSCommand extends Command {
                  return true;
              }
