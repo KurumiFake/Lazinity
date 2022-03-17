@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: BuildTools <LinsaFTW@users.noreply.github.com>
+Date: Tue, 3 Nov 2020 16:19:20 -0300
+Subject: [PATCH] (FlamePaper) Return last slot by default
+
+Original code by 2lstudios-mc, licensed under MIT
+You can find the original code on https://github.com/2lstudios-mc/FlamePaper
+
+diff --git a/src/main/java/net/minecraft/world/inventory/Container.java b/src/main/java/net/minecraft/world/inventory/Container.java
+index b58ec4abff2840556eb06e08b241a2eaa85c2c7f..4d9c4f5db0d87fe6663cc1a173d779b93eccce53 100644
+--- a/src/main/java/net/minecraft/world/inventory/Container.java
++++ b/src/main/java/net/minecraft/world/inventory/Container.java
+@@ -191,6 +191,12 @@ public abstract class Container {
+     }
+ 
+     public Slot getSlot(int i) {
++        final int lastIndex = this.slots.size() - 1;
++
++        if (i > lastIndex) {
++            i = lastIndex;
++        }
++
+         return (Slot) this.slots.get(i);
+     }
+ 

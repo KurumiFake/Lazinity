@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: cswhite2000 <18whitechristop@gmail.com>
+Date: Sun, 5 Aug 2018 15:00:46 -0700
+Subject: [PATCH] (FlamePaper) Fix head rotation packet spam
+
+Original code by 2lstudios-mc, licensed under MIT
+You can find the original code on https://github.com/2lstudios-mc/FlamePaper
+
+diff --git a/src/main/java/net/minecraft/server/level/EntityTrackerEntry.java b/src/main/java/net/minecraft/server/level/EntityTrackerEntry.java
+index 6aad662d823e0a64b8e18156b5f084399bc4f228..ffcf6e2dfc1519c6ff522999a7ffe1bce1fb47f2 100644
+--- a/src/main/java/net/minecraft/server/level/EntityTrackerEntry.java
++++ b/src/main/java/net/minecraft/server/level/EntityTrackerEntry.java
+@@ -364,8 +364,10 @@ public class EntityTrackerEntry {
+         }
+ 
+         // CraftBukkit start - Fix for nonsensical head yaw
+-        this.headYaw = MathHelper.d(this.tracker.getHeadRotation() * 256.0F / 360.0F);
+-        consumer.accept(new PacketPlayOutEntityHeadRotation(this.tracker, (byte) headYaw));
++        if(this.tracker instanceof EntityLiving) {
++            this.headYaw = MathHelper.d(this.tracker.getHeadRotation() * 256.0F / 360.0F);
++            consumer.accept(new PacketPlayOutEntityHeadRotation(this.tracker, (byte) headYaw));
++        }
+         // CraftBukkit end
+ 
+         if (this.tracker instanceof EntityLiving) {
