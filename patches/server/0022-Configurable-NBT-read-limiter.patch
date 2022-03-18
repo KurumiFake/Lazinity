@@ -5,7 +5,7 @@ Subject: [PATCH] Configurable NBT read limiter
 
 
 diff --git a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
-index 3e85b5418bf67a813ccb51e9472778575b070ead..71d8d784f55462aa21a5d83a65b6d371cac03989 100644
+index ba5f6e80cbfd8326b1786f1fc1a0f6cac4771454..69c0acf96dc6f3ce4c2581c8994e045a17e28c22 100644
 --- a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
 +++ b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
 @@ -123,4 +123,9 @@ public final class LazinityConfig {

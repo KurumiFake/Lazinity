@@ -7,7 +7,7 @@ Original code by ProjectKig, licensed under GPLv3
 You can find the original code on https://github.com/ProjectKig/KigPaper
 
 diff --git a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
-index fa9a8a2eb27e0726afdc8b713fb2d2c8f8c8f36f..3e85b5418bf67a813ccb51e9472778575b070ead 100644
+index 0c39a130fbc90ba28951efd1ce68f739eb89a83c..ba5f6e80cbfd8326b1786f1fc1a0f6cac4771454 100644
 --- a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
 +++ b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
 @@ -119,4 +119,8 @@ public final class LazinityConfig {

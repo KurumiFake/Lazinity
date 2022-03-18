@@ -6,7 +6,7 @@ Subject: [PATCH] Lazinity config file
 
 diff --git a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..fa9a8a2eb27e0726afdc8b713fb2d2c8f8c8f36f
+index 0000000000000000000000000000000000000000..0c39a130fbc90ba28951efd1ce68f739eb89a83c
 --- /dev/null
 +++ b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
 @@ -0,0 +1,122 @@
@@ -99,7 +99,7 @@ index 0000000000000000000000000000000000000000..fa9a8a2eb27e0726afdc8b713fb2d2c8
 +
 +    private static long getLong(final String path, final long dfl) {
 +        LazinityConfig.config.addDefault(path, Long.valueOf(dfl));
-+        return LazinityConfig.config.getDouble(path, dfl);
++        return LazinityConfig.config.getLong(path, dfl);
 +    }
 +
 +    public static final class WorldConfig {
