@@ -1,0 +1,21 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Sat, 19 Mar 2022 03:38:06 +0000
+Subject: [PATCH] Tighten NBT read limiter
+
+dual side dagger: whilst blocking big packet crashes, makes it easier to chunkban
+tighten your books.
+
+diff --git a/src/main/java/net/minecraft/network/PacketDataSerializer.java b/src/main/java/net/minecraft/network/PacketDataSerializer.java
+index 579eb1260c7266cd41025cff177de4fb00ac0cec..8a2d19db712dcd663f8bbb7edf1a6daae617e7d9 100644
+--- a/src/main/java/net/minecraft/network/PacketDataSerializer.java
++++ b/src/main/java/net/minecraft/network/PacketDataSerializer.java
+@@ -274,7 +274,7 @@ public class PacketDataSerializer extends ByteBuf {
+ 
+     @Nullable
+     public NBTTagCompound l() {
+-        return this.a(new NBTReadLimiter(2097152L));
++        return this.a(new NBTReadLimiter(48000L));
+     }
+ 
+     @Nullable
