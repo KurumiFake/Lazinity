@@ -1,6 +1,6 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
-Date: Sat, 19 Mar 2022 05:03:18 +0000
+Date: Sat, 19 Mar 2022 05:16:28 +0000
 Subject: [PATCH] useless patch xd
 
 
@@ -171,10 +171,10 @@ index fc687515fdfd47e90e11a2832de07d784edeef25..f04f9596a40b9222db2182ede512f82f
              visibleChunks.values().stream().filter(PlayerChunk::hasBeenLoaded).forEach((playerchunk) -> {
                  IChunkAccess ichunkaccess = (IChunkAccess) playerchunk.getChunkSave().getNow(null); // CraftBukkit - decompile error
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 425a5805c1f5835e74293d5cd0633ea5aa9f3841..6b47f3de9d4a308548a373f9b13f5449f1122256 100644
+index 700f2c76b3a493677a1205d585f7b56512fb1652..53cc9a1a1b2a0316f8c6d7b93c3cf428a7c5d114 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
-@@ -258,7 +258,7 @@ public class Main {
+@@ -266,7 +266,7 @@ public class Main {
                      System.setProperty(TerminalConsoleAppender.JLINE_OVERRIDE_PROPERTY, "false"); // Paper
                  }
  
@@ -183,7 +183,7 @@ index 425a5805c1f5835e74293d5cd0633ea5aa9f3841..6b47f3de9d4a308548a373f9b13f5449
                      Date buildDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(Main.class.getPackage().getImplementationVendor()); // Paper
  
                      Calendar deadline = Calendar.getInstance();
-@@ -271,7 +271,7 @@ public class Main {
+@@ -279,7 +279,7 @@ public class Main {
                          //Thread.sleep(TimeUnit.SECONDS.toMillis(20));
                          // Paper End
                      }
@@ -192,10 +192,10 @@ index 425a5805c1f5835e74293d5cd0633ea5aa9f3841..6b47f3de9d4a308548a373f9b13f5449
  
                  // Paper start - Log Java and OS versioning to help with debugging plugin issues
                  java.lang.management.RuntimeMXBean runtimeMX = java.lang.management.ManagementFactory.getRuntimeMXBean();
-@@ -286,7 +286,7 @@ public class Main {
-                 }
+@@ -295,7 +295,7 @@ public class Main {
                  // Paper end
                  System.setProperty( "library.jansi.version", "Paper" ); // Paper - set meaningless jansi version to prevent git builds from crashing on Windows
+                 me.kurumifake.lazinity.LazinityConfig.init((java.io.File) options.valueOf("lazinity-settings")); // Lazinity - server config
 -                System.out.println("Loading libraries, please wait...");
 +                System.out.println("Loading libraries...");
                  net.minecraft.server.Main.main(options);

@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: RoccoDev <hey@rocco.dev>
+Date: Mon, 26 Apr 2021 09:25:19 +0200
+Subject: [PATCH] (KigPaper) Disable book deserialization by default
+
+Original code by ProjectKig, licensed under GPLv3
+You can find the original code on https://github.com/ProjectKig/KigPaper
+
+diff --git a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
+index 0c39a130fbc90ba28951efd1ce68f739eb89a83c..ba5f6e80cbfd8326b1786f1fc1a0f6cac4771454 100644
+--- a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
++++ b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
+@@ -119,4 +119,8 @@ public final class LazinityConfig {
+         }
+     }
+ 
++    public static boolean enableBookDeserialization;
++    private static void enableBookDeserialization() {
++        enableBookDeserialization = getBoolean("enable-book-deserialization", false);
++    }
+ }
+diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
+index 2cc893cd9da8339d3c4a79ff206143fce41a4de0..d071f3d277ff25b8bc5760091b25fd5fdd11fdc9 100644
+--- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
++++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
+@@ -1153,6 +1153,7 @@ public class PlayerConnection implements PacketListenerPlayIn {
+         }
+         // Paper end
+         // CraftBukkit start
++        if (!me.kurumifake.lazinity.LazinityConfig.enableBookDeserialization) return; // KigPaper
+         if (this.lastBookTick + 20 > MinecraftServer.currentTick) {
+             this.disconnect("Book edited too quickly!", org.bukkit.event.player.PlayerKickEvent.Cause.ILLEGAL_ACTION); // Paper - kick event cause
+             return;
