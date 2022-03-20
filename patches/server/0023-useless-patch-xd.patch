@@ -196,7 +196,7 @@ index 700f2c76b3a493677a1205d585f7b56512fb1652..53cc9a1a1b2a0316f8c6d7b93c3cf428
              } catch (Throwable t) {
                  t.printStackTrace();
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index e62890433ffbe0b4e48942fe6c38b599a19e58fd..1fed1c22b0d9ecee8e27d2c497b516db6679a777 100644
+index e62890433ffbe0b4e48942fe6c38b599a19e58fd..8675f764b1d625cf67a46b65c5964907ed92aa89 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -1,7 +1,7 @@
@@ -234,7 +234,7 @@ index e62890433ffbe0b4e48942fe6c38b599a19e58fd..1fed1c22b0d9ecee8e27d2c497b516db
      private static String format(double tps) // Paper - Made static
      {
 -        return ( ( tps > 18.0 ) ? ChatColor.GREEN : ( tps > 16.0 ) ? ChatColor.YELLOW : ChatColor.RED ).toString()
-+        return (tps).toString()
++        return Double.toString(tps)
                  + ( ( tps > 21.0 ) ? "*" : "" ) + Math.min( Math.round( tps * 100.0 ) / 100.0, 20.0 ); // Paper - only print * at 21, we commonly peak to 20.02 as the tick sleep is not accurate enough, stop the noise
      }
  }
