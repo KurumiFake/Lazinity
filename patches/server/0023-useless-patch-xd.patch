@@ -5,7 +5,7 @@ Subject: [PATCH] useless patch xd
 
 
 diff --git a/src/main/java/com/destroystokyo/paper/MSPTCommand.java b/src/main/java/com/destroystokyo/paper/MSPTCommand.java
-index d0211d4f39f9d6af1d751ac66342b42cc6d7ba6d..55833a6767cf2d7a852afb4a764bf6bf761a029b 100644
+index d0211d4f39f9d6af1d751ac66342b42cc6d7ba6d..7fa1630fddb2c25eed9dcef37ef5ab4460c1c92f 100644
 --- a/src/main/java/com/destroystokyo/paper/MSPTCommand.java
 +++ b/src/main/java/com/destroystokyo/paper/MSPTCommand.java
 @@ -1,7 +1,7 @@
@@ -36,11 +36,11 @@ index d0211d4f39f9d6af1d751ac66342b42cc6d7ba6d..55833a6767cf2d7a852afb4a764bf6bf
 +        return Arrays.asList(/*getColor(avgD), getColor(minD), getColor(maxD)*/);
      }
  
--    private static String getColor(double avg) {
-+    /*private static String getColor(double avg) {
-         return ChatColor.COLOR_CHAR + (avg >= 50 ? "c" : avg >= 40 ? "e" : "a") + DF.format(avg);
+     private static String getColor(double avg) {
+-        return ChatColor.COLOR_CHAR + (avg >= 50 ? "c" : avg >= 40 ? "e" : "a") + DF.format(avg);
 -    }
-+    }*/ // Lazinity
++        return DF.format(avg);
++    } // Lazinity
  }
 diff --git a/src/main/java/gg/airplane/AirplaneCommand.java b/src/main/java/gg/airplane/AirplaneCommand.java
 index 89c89e633f14b5820147e734b1b7ad8cadfdce80..b306d9ea0b87f9e2d373198de55aea51a8fdfe42 100644
@@ -202,7 +202,7 @@ index 700f2c76b3a493677a1205d585f7b56512fb1652..53cc9a1a1b2a0316f8c6d7b93c3cf428
              } catch (Throwable t) {
                  t.printStackTrace();
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index e62890433ffbe0b4e48942fe6c38b599a19e58fd..679122082db9bf58d5a1f5c49a9a06c927b1c270 100644
+index e62890433ffbe0b4e48942fe6c38b599a19e58fd..e748172bef023d4317c9aacc21560dffcc5a3a3c 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -1,7 +1,7 @@
@@ -242,10 +242,11 @@ index e62890433ffbe0b4e48942fe6c38b599a19e58fd..679122082db9bf58d5a1f5c49a9a06c9
      }
  
 -    private boolean hasShownMemoryWarning; // Paper
-+    /*private boolean hasShownMemoryWarning; // Paper // Lazinity - we dont need cols
++    //private boolean hasShownMemoryWarning; // Paper // Lazinity - we dont need cols
      private static String format(double tps) // Paper - Made static
      {
-         return ( ( tps > 18.0 ) ? ChatColor.GREEN : ( tps > 16.0 ) ? ChatColor.YELLOW : ChatColor.RED ).toString()
+-        return ( ( tps > 18.0 ) ? ChatColor.GREEN : ( tps > 16.0 ) ? ChatColor.YELLOW : ChatColor.RED ).toString()
++        return toString()
                  + ( ( tps > 21.0 ) ? "*" : "" ) + Math.min( Math.round( tps * 100.0 ) / 100.0, 20.0 ); // Paper - only print * at 21, we commonly peak to 20.02 as the tick sleep is not accurate enough, stop the noise
 -    }
 +    }*/
