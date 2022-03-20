@@ -196,7 +196,7 @@ index 700f2c76b3a493677a1205d585f7b56512fb1652..53cc9a1a1b2a0316f8c6d7b93c3cf428
              } catch (Throwable t) {
                  t.printStackTrace();
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index e62890433ffbe0b4e48942fe6c38b599a19e58fd..453af46d04229ed61f2c53adf8ce36f9c5e2a22c 100644
+index e62890433ffbe0b4e48942fe6c38b599a19e58fd..1cc74f3c21fca546bcac21e69824798b73f54d64 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -1,7 +1,7 @@
@@ -213,7 +213,7 @@ index e62890433ffbe0b4e48942fe6c38b599a19e58fd..453af46d04229ed61f2c53adf8ce36f9
  
          for ( int i = 0; i < tps.length; i++) {
 -            tpsAvg[i] = format( tps[i] );
-+            tpsAvg[i] = format tps[i];
++            tpsAvg[i] = tps[i];
          }
 -        sender.sendMessage(ChatColor.GOLD + "TPS from last 1m, 5m, 15m: " + org.apache.commons.lang.StringUtils.join(tpsAvg, ", "));
 +        sender.sendMessage("TPS from last 1m, 5m, 15m: " + org.apache.commons.lang.StringUtils.join(tpsAvg, ", "));
