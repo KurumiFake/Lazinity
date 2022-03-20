@@ -196,7 +196,7 @@ index 700f2c76b3a493677a1205d585f7b56512fb1652..53cc9a1a1b2a0316f8c6d7b93c3cf428
              } catch (Throwable t) {
                  t.printStackTrace();
 diff --git a/src/main/java/org/spigotmc/TicksPerSecondCommand.java b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
-index e62890433ffbe0b4e48942fe6c38b599a19e58fd..1cc74f3c21fca546bcac21e69824798b73f54d64 100644
+index e62890433ffbe0b4e48942fe6c38b599a19e58fd..f6e2208fbd88ec2f7df8a32060aa9de837cd7dc0 100644
 --- a/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 +++ b/src/main/java/org/spigotmc/TicksPerSecondCommand.java
 @@ -1,7 +1,7 @@
@@ -208,12 +208,9 @@ index e62890433ffbe0b4e48942fe6c38b599a19e58fd..1cc74f3c21fca546bcac21e69824798b
  import org.bukkit.command.Command;
  import org.bukkit.command.CommandSender;
  
-@@ -29,25 +29,24 @@ public class TicksPerSecondCommand extends Command
-         String[] tpsAvg = new String[tps.length];
- 
+@@ -31,23 +31,23 @@ public class TicksPerSecondCommand extends Command
          for ( int i = 0; i < tps.length; i++) {
--            tpsAvg[i] = format( tps[i] );
-+            tpsAvg[i] = tps[i];
+             tpsAvg[i] = format( tps[i] );
          }
 -        sender.sendMessage(ChatColor.GOLD + "TPS from last 1m, 5m, 15m: " + org.apache.commons.lang.StringUtils.join(tpsAvg, ", "));
 +        sender.sendMessage("TPS from last 1m, 5m, 15m: " + org.apache.commons.lang.StringUtils.join(tpsAvg, ", "));
@@ -233,12 +230,11 @@ index e62890433ffbe0b4e48942fe6c38b599a19e58fd..1cc74f3c21fca546bcac21e69824798b
      }
  
 -    private boolean hasShownMemoryWarning; // Paper
-+    /*private boolean hasShownMemoryWarning; // Paper // Lazinity
++    //private boolean hasShownMemoryWarning; // Paper // Lazinity
      private static String format(double tps) // Paper - Made static
      {
 -        return ( ( tps > 18.0 ) ? ChatColor.GREEN : ( tps > 16.0 ) ? ChatColor.YELLOW : ChatColor.RED ).toString()
--                + ( ( tps > 21.0 ) ? "*" : "" ) + Math.min( Math.round( tps * 100.0 ) / 100.0, 20.0 ); // Paper - only print * at 21, we commonly peak to 20.02 as the tick sleep is not accurate enough, stop the noise
--    }
-+        return  ( ( tps > 21.0 ) ? "*" : "" ) + Math.min( Math.round( tps * 100.0 ) / 100.0, 20.0 ); // Paper - only print * at 21, we commonly peak to 20.02 as the tick sleep is not accurate enough, stop the noise
-+    }*/
++        return tps.toString()
+                 + ( ( tps > 21.0 ) ? "*" : "" ) + Math.min( Math.round( tps * 100.0 ) / 100.0, 20.0 ); // Paper - only print * at 21, we commonly peak to 20.02 as the tick sleep is not accurate enough, stop the noise
+     }
  }
