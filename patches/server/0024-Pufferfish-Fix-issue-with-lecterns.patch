@@ -1,0 +1,24 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kevin Raneri <kevin.raneri@gmail.com>
+Date: Sat, 2 Apr 2022 02:12:13 -0400
+Subject: [PATCH] (Pufferfish) Fix issue with lecterns
+
+Original code by pufferfish-gg, licensed under GPLv3
+You can find the original code on https://github.com/pufferfish-gg/Pufferfish
+
+diff --git a/src/main/java/net/minecraft/world/inventory/ContainerLectern.java b/src/main/java/net/minecraft/world/inventory/ContainerLectern.java
+index 65687792351fbd561b1f4d6f88bc7288b6d8346f..f83b21c719faf9a768a334c7ccdc0cce4580c6f4 100644
+--- a/src/main/java/net/minecraft/world/inventory/ContainerLectern.java
++++ b/src/main/java/net/minecraft/world/inventory/ContainerLectern.java
+@@ -118,6 +118,11 @@ public class ContainerLectern extends Container {
+         }
+     }
+ 
++    @Override
++    public ItemStack quickMoveStack(net.minecraft.world.entity.player.EntityHuman player, int index) {
++        return ItemStack.EMPTY;
++    }
++
+     @Override
+     public void a(int i, int j) {
+         super.a(i, j);
