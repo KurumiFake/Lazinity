@@ -17,12 +17,20 @@ jobs:
         path: ~/.m2/repository
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-maven-
-    - name: Patch Lazinity
+    - name: patch
       run: |
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
         git submodule update --init --recursive
-        ./lazinity jar
+        ./lazinity patch
+    - name: blak smok
+      run: tar -czf l.tar.gz Lazinity-*
+    - uses: actions/upload-artifact@v2
+      with:
+        name: blak-smok-JDK${{ matrix.java }}
+        path: l.tar.gz
+    - name: bulid
+      run: ./lazinity jar
     - uses: actions/upload-artifact@v2
       with:
         name: Lazinity-JDK${{ matrix.java }}
