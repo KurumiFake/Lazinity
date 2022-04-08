@@ -24,7 +24,7 @@ jobs:
         git submodule update --init --recursive
         ./lazinity patch
     - name: blak smok
-      run: tar -czf l.tar.gz Lazinity-*
+      run: tar -czf l.tar.gz Lazinity-* mcdev
     - uses: actions/upload-artifact@v2
       with:
         name: blak-smok-JDK${{ matrix.java }}
