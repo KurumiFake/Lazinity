@@ -12,21 +12,23 @@ Original code by Minebench, licensed under GPLv3
 You can find the original code on https://github.com/Minebench/Origami
 
 diff --git a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
-index ba5f6e80cbfd8326b1786f1fc1a0f6cac4771454..7e90eb114c3b69aa3b56f7064049dd39d4944658 100644
+index ba5f6e80cbfd8326b1786f1fc1a0f6cac4771454..14dc3659a32b22462dfb68daab165209c17c5496 100644
 --- a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
 +++ b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
-@@ -123,4 +123,11 @@ public final class LazinityConfig {
-     private static void enableBookDeserialization() {
-         enableBookDeserialization = getBoolean("enable-book-deserialization", false);
-     }
+@@ -117,6 +117,13 @@ public final class LazinityConfig {
+             config.addDefault("worlds.default." + path, Double.valueOf(dfl));
+             return config.getDouble("worlds." + worldName + "." + path, config.getDouble("worlds.default." + path, dfl));
+         }
 +
-+    public boolean tickEmptyHoppers = false;
-+    public int fullHopperCooldown = 128;
-+    private void hopperOptimizations() {
-+        tickEmptyHoppers = getBoolean("tick-empty-hoppers", tickEmptyHoppers);
-+        fullHopperCooldown = getInt("ticks-per.full-hopper-cooldown", fullHopperCooldown);
-+    }
- }
++        public boolean tickEmptyHoppers = false;
++        public int fullHopperCooldown = 128;
++        private void hopperOptimizations() {
++            tickEmptyHoppers = getBoolean("tick-empty-hoppers", tickEmptyHoppers);
++            fullHopperCooldown = getInt("ticks-per.full-hopper-cooldown", fullHopperCooldown);
++        }
+     }
+ 
+     public static boolean enableBookDeserialization;
 diff --git a/src/main/java/net/minecraft/world/entity/item/EntityItem.java b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
 index cb5c4379bfd16a74debaf23f840dbf1e5535ad7f..7513ca8ef416ee9ce87ba3faf0a2d2a1a58c82c1 100644
 --- a/src/main/java/net/minecraft/world/entity/item/EntityItem.java
