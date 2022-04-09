@@ -7,7 +7,7 @@ Subject: [PATCH] pom changes
 - update dependencies
 
 diff --git a/pom.xml b/pom.xml
-index 7712a8723cddb59829a5181f54098d0bb4083f6e..c6d67fcd25a0550b780ee10722793a776c650cc1 100644
+index 7712a8723cddb59829a5181f54098d0bb4083f6e..382e8d87c00367da782b774ec45651a3a14cd556 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -3,18 +3,18 @@
@@ -73,7 +73,7 @@ index 7712a8723cddb59829a5181f54098d0bb4083f6e..c6d67fcd25a0550b780ee10722793a77
              <groupId>org.ow2.asm</groupId>
              <artifactId>asm-tree</artifactId>
 -            <version>7.3.1</version>
-+            <version>9.2</version>
++            <version>9.3</version>
              <scope>test</scope>
          </dependency>
      </dependencies>
@@ -100,7 +100,7 @@ index 7712a8723cddb59829a5181f54098d0bb4083f6e..c6d67fcd25a0550b780ee10722793a77
                  <groupId>org.apache.maven.plugins</groupId>
                  <artifactId>maven-shade-plugin</artifactId>
 -                <version>3.2.1</version>
-+                <version>3.2.4</version>
++                <version>3.3.0</version>
                  <executions>
                      <execution>
                          <phase>package</phase>

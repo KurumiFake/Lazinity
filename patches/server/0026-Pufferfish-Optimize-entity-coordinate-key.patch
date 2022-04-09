@@ -1,0 +1,41 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kevin Raneri <kevin.raneri@gmail.com>
+Date: Tue, 9 Nov 2021 14:33:16 -0500
+Subject: [PATCH] (Pufferfish) Optimize entity coordinate key
+
+When executing getCoordinateKey for entities (a hotpath), the JVM is
+required to repeatedly cast doubles to longs. The performance impact of
+this depends on the CPU architecture, but generally switching between
+FPU and ALU incurs a significant performance hit. The casted/rounded
+data is already available in the blockPosition struct, so we use that
+instead of re-doing the casting.
+
+Original code by pufferfish-gg, licensed under GPLv3
+You can find the original code on https://github.com/pufferfish-gg/Pufferfish
+
+diff --git a/src/main/java/net/minecraft/server/MCUtil.java b/src/main/java/net/minecraft/server/MCUtil.java
+index b7399d17dd64ca8b1f1fab405cb0ac914dc53b98..38379143b460d1ea362867333059859149921ddd 100644
+--- a/src/main/java/net/minecraft/server/MCUtil.java
++++ b/src/main/java/net/minecraft/server/MCUtil.java
+@@ -200,7 +200,7 @@ public final class MCUtil {
+     }
+ 
+     public static long getCoordinateKey(final Entity entity) {
+-        return ((long)(MCUtil.fastFloor(entity.locZ()) >> 4) << 32) | ((MCUtil.fastFloor(entity.locX()) >> 4) & 0xFFFFFFFFL);
++        return ((long)(entity.locBlock.getZ() >> 4) << 32) | ((entity.locBlock.getX() >> 4) & 0xFFFFFFFFL); // Pufferfish - eliminate double->long cast in hotpath
+     }
+ 
+     public static long getCoordinateKey(final ChunkCoordIntPair pair) {
+diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
+index 7837f41b60c00205e57d43a09639192fc001c11f..642af003959664ca5d571c37e897b2f3b696220d 100644
+--- a/src/main/java/net/minecraft/world/entity/Entity.java
++++ b/src/main/java/net/minecraft/world/entity/Entity.java
+@@ -206,7 +206,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, ne
+     public double lastY;
+     public double lastZ;
+     private Vec3D loc;
+-    private BlockPosition locBlock;
++    public BlockPosition locBlock; // Pufferfish - private->public
+     private Vec3D mot;
+     public float yaw;
+     public float pitch;

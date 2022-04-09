@@ -5,7 +5,7 @@ Subject: [PATCH] update dependencies
 
 
 diff --git a/pom.xml b/pom.xml
-index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..941fad4aebb0913d7408e127a89792ac014e7282 100644
+index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..72363549f25574490c1b435d07640cf804dc786a 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -30,7 +30,7 @@
@@ -47,7 +47,7 @@ index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..941fad4aebb0913d7408e127a89792ac
              <groupId>org.ow2.asm</groupId>
              <artifactId>asm</artifactId>
 -            <version>9.1</version>
-+            <version>9.2</version>
++            <version>9.3</version>
              <scope>compile</scope>
          </dependency>
          <dependency>
@@ -71,7 +71,7 @@ index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..941fad4aebb0913d7408e127a89792ac
              <groupId>org.apache.maven</groupId>
              <artifactId>maven-resolver-provider</artifactId>
 -            <version>3.8.1</version>
-+            <version>3.8.4</version>
++            <version>3.8.5</version>
              <scope>runtime</scope>
          </dependency>
          <dependency>
@@ -103,7 +103,7 @@ index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..941fad4aebb0913d7408e127a89792ac
              <groupId>io.github.classgraph</groupId>
              <artifactId>classgraph</artifactId>
 -            <version>4.8.47</version>
-+            <version>4.8.141</version>
++            <version>4.8.143</version>
              <scope>test</scope>
          </dependency>
          <!-- for optimized protocol handling -->
@@ -129,7 +129,7 @@ index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..941fad4aebb0913d7408e127a89792ac
                  <groupId>org.apache.maven.plugins</groupId>
                  <artifactId>maven-shade-plugin</artifactId>
 -                <version>3.2.3</version>
-+                <version>3.2.4</version>
++                <version>3.3.0</version>
                  <executions>
                      <execution>
                          <phase>package</phase>
@@ -184,7 +184,7 @@ index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..941fad4aebb0913d7408e127a89792ac
                          <groupId>org.eclipse.jdt</groupId>
                          <artifactId>ecj</artifactId>
 -                        <version>3.24.0</version>
-+                        <version>3.28.0</version>
++                        <version>3.29.0</version>
                      </dependency>
                  </dependencies>
              </plugin>
