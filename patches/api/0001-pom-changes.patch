@@ -7,7 +7,7 @@ Subject: [PATCH] pom changes
 - update dependencies
 
 diff --git a/pom.xml b/pom.xml
-index 329ba2f5828afecdfa1eb19518dd4eda2ca5d4ff..9dd35d0c4482c3c210ee69f28d8b4387f4c02f9f 100644
+index 329ba2f5828afecdfa1eb19518dd4eda2ca5d4ff..09ec964d6a6d1c7fc2225f66e96891c3a1fc55e6 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -3,18 +3,18 @@
@@ -181,7 +181,7 @@ index 329ba2f5828afecdfa1eb19518dd4eda2ca5d4ff..9dd35d0c4482c3c210ee69f28d8b4387
                  <groupId>org.apache.maven.plugins</groupId>
                  <artifactId>maven-shade-plugin</artifactId>
 -                <version>3.2.3</version>
-+                <version>3.3.0</version>
++                <version>3.2.4</version>
                  <executions>
                      <execution>
                          <phase>package</phase>
