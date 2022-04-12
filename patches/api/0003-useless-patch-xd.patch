@@ -1,0 +1,146 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Tue, 12 Apr 2022 10:28:27 +0000
+Subject: [PATCH] useless patch xd
+
+
+diff --git a/src/main/java/org/bukkit/command/defaults/ReloadCommand.java b/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
+index 0c7ba0718de2b93d013968ca0fec34ffd423990f..bfe3674534c7125c1c613046e2fcaf5dad4d1db4 100644
+--- a/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
++++ b/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
+@@ -4,7 +4,7 @@ import java.util.Arrays;
+ import java.util.Collections;
+ import java.util.List;
+ import org.bukkit.Bukkit;
+-import org.bukkit.ChatColor;
++//import org.bukkit.ChatColor;
+ import org.bukkit.command.Command;
+ import org.bukkit.command.CommandSender;
+ import org.jetbrains.annotations.NotNull;
+@@ -27,32 +27,32 @@ public class ReloadCommand extends BukkitCommand {
+         if (args.length == 1) {
+             if (args[0].equalsIgnoreCase("permissions")) {
+                 Bukkit.getServer().reloadPermissions();
+-                Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Permissions successfully reloaded.");
++                Command.broadcastCommandMessage(sender, /*ChatColor.GREEN + */"Permissions successfully reloaded.");
+                 return true;
+             } else if ("commands".equalsIgnoreCase(args[0])) {
+                 if (Bukkit.getServer().reloadCommandAliases()) {
+-                    Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Command aliases successfully reloaded.");
++                    Command.broadcastCommandMessage(sender, /*ChatColor.GREEN + */"Command aliases successfully reloaded.");
+                 } else {
+-                    Command.broadcastCommandMessage(sender, ChatColor.RED + "An error occurred while trying to reload command aliases.");
++                    Command.broadcastCommandMessage(sender, /*ChatColor.RED + */"An error occurred while trying to reload command aliases.");
+                 }
+                 return true;
+             } else if ("confirm".equalsIgnoreCase(args[0])) {
+                 confirmed = true;
+             } else {
+-                Command.broadcastCommandMessage(sender, ChatColor.RED + "Usage: " + usageMessage);
++                Command.broadcastCommandMessage(sender, /*ChatColor.RED + */"Usage: " + usageMessage);
+                 return true;
+             }
+         }
+         if (!confirmed) {
+-            Command.broadcastCommandMessage(sender, ChatColor.RED + "Are you sure you wish to reload your server? Doing so may cause bugs and memory leaks. It is recommended to restart instead of using /reload. To confirm, please type " + ChatColor.YELLOW + "/reload confirm");
++            Command.broadcastCommandMessage(sender, /*ChatColor.RED + */"Are you sure you wish to reload your server? Doing so may cause bugs and memory leaks. It is recommended to restart instead of using /reload. To confirm, please type /reload confirm");
+             return true;
+         }
+         // Paper end
+ 
+-        Command.broadcastCommandMessage(sender, ChatColor.RED + "Please note that this command is not supported and may cause issues when using some plugins.");
+-        Command.broadcastCommandMessage(sender, ChatColor.RED + "If you encounter any issues please use the /stop command to restart your server.");
++        Command.broadcastCommandMessage(sender, /*ChatColor.RED + */"Please note that this command is not supported and may cause issues when using some plugins.");
++        Command.broadcastCommandMessage(sender, /*ChatColor.RED + */"If you encounter any issues please restart your server.");
+         Bukkit.reload();
+-        Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Reload complete.");
++        Command.broadcastCommandMessage(sender, /*ChatColor.GREEN + */"Reload complete.");
+ 
+         return true;
+     }
+diff --git a/src/main/java/org/bukkit/command/defaults/VersionCommand.java b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
+index 4c2ddc722a9dc4011906ad9530b13fa9be1d3ff9..16fd77fe5f9b517b1918c3af1e655a6ecb9742e2 100644
+--- a/src/main/java/org/bukkit/command/defaults/VersionCommand.java
++++ b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
+@@ -20,7 +20,7 @@ import java.util.concurrent.locks.ReentrantLock;
+ import net.kyori.adventure.text.Component; // Paper
+ import org.apache.commons.lang.Validate;
+ import org.bukkit.Bukkit;
+-import org.bukkit.ChatColor;
++//import org.bukkit.ChatColor;
+ import org.bukkit.command.CommandSender;
+ import org.bukkit.plugin.Plugin;
+ import org.bukkit.plugin.PluginDescriptionFile;
+@@ -81,8 +81,8 @@ public class VersionCommand extends BukkitCommand {
+             }
+ 
+             if (!found) {
+-                sender.sendMessage("This server is not running any plugin by that name.");
+-                sender.sendMessage("Use /plugins to get a list of plugins.");
++                sender.sendMessage("Not running any plugin by that name.");
++                //sender.sendMessage("Use /plugins to get a list of plugins.");
+             }
+         }
+         return true;
+@@ -90,14 +90,14 @@ public class VersionCommand extends BukkitCommand {
+ 
+     private void describeToSender(@NotNull Plugin plugin, @NotNull CommandSender sender) {
+         PluginDescriptionFile desc = plugin.getDescription();
+-        sender.sendMessage(ChatColor.GREEN + desc.getName() + ChatColor.WHITE + " version " + ChatColor.GREEN + desc.getVersion());
++        sender.sendMessage(/*ChatColor.GREEN + /*desc.getName()/* + ChatColor.WHITE*/ + " version "/* + ChatColor.GREEN*/ + desc.getVersion());
+ 
+         if (desc.getDescription() != null) {
+             sender.sendMessage(desc.getDescription());
+         }
+ 
+         if (desc.getWebsite() != null) {
+-            sender.sendMessage("Website: " + ChatColor.GREEN + desc.getWebsite());
++            sender.sendMessage("Website: "/* + ChatColor.GREEN*/ + desc.getWebsite());
+         }
+ 
+         if (!desc.getAuthors().isEmpty()) {
+@@ -119,7 +119,7 @@ public class VersionCommand extends BukkitCommand {
+ 
+         for (int i = 0; i < names.size(); i++) {
+             if (result.length() > 0) {
+-                result.append(ChatColor.WHITE);
++                //result.append(ChatColor.WHITE);
+ 
+                 if (i < names.size() - 1) {
+                     result.append(", ");
+@@ -128,7 +128,7 @@ public class VersionCommand extends BukkitCommand {
+                 }
+             }
+ 
+-            result.append(ChatColor.GREEN);
++            //result.append(ChatColor.GREEN);
+             result.append(names.get(i));
+         }
+ 
+@@ -179,7 +179,7 @@ public class VersionCommand extends BukkitCommand {
+                 return;
+             }
+             versionWaiters.add(sender);
+-            sender.sendMessage(Component.text("Checking version, please wait...", net.kyori.adventure.text.format.NamedTextColor.WHITE, net.kyori.adventure.text.format.TextDecoration.ITALIC)); // Paper
++            sender.sendMessage(Component.text("Checking version..."/*, net.kyori.adventure.text.format.NamedTextColor.WHITE, net.kyori.adventure.text.format.TextDecoration.ITALIC*/)); // Paper
+             if (!versionTaskStarted) {
+                 versionTaskStarted = true;
+                 new Thread(new Runnable() {
+@@ -199,7 +199,7 @@ public class VersionCommand extends BukkitCommand {
+         String version = Bukkit.getVersion();
+         // Paper start
+         if (version.startsWith("null")) { // running from ide?
+-            setVersionMessage(Component.text("Unknown version, custom build?", net.kyori.adventure.text.format.NamedTextColor.YELLOW));
++            setVersionMessage(Component.text("Unknown version."/*, net.kyori.adventure.text.format.NamedTextColor.YELLOW*/));
+             return;
+         }
+         setVersionMessage(getVersionFetcher().getVersionMessage(version));
+@@ -241,7 +241,7 @@ public class VersionCommand extends BukkitCommand {
+     private void setVersionMessage(final @NotNull Component msg) {
+         lastCheck = System.currentTimeMillis();
+         final Component message = net.kyori.adventure.text.TextComponent.ofChildren(
+-            Component.text("This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")", net.kyori.adventure.text.format.NamedTextColor.WHITE),
++            Component.text("Running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")", net.kyori.adventure.text.format.NamedTextColor.WHITE),
+             Component.newline(),
+             msg
+         );
