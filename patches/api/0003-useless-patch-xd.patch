@@ -5,7 +5,7 @@ Subject: [PATCH] useless patch xd
 
 
 diff --git a/src/main/java/org/bukkit/command/defaults/ReloadCommand.java b/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
-index 0c7ba0718de2b93d013968ca0fec34ffd423990f..bfe3674534c7125c1c613046e2fcaf5dad4d1db4 100644
+index 0c7ba0718de2b93d013968ca0fec34ffd423990f..3a0a24af4d0b73ee0ca17e0b8e8dcf812d66e7eb 100644
 --- a/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
 +++ b/src/main/java/org/bukkit/command/defaults/ReloadCommand.java
 @@ -4,7 +4,7 @@ import java.util.Arrays;
@@ -22,44 +22,44 @@ index 0c7ba0718de2b93d013968ca0fec34ffd423990f..bfe3674534c7125c1c613046e2fcaf5d
              if (args[0].equalsIgnoreCase("permissions")) {
                  Bukkit.getServer().reloadPermissions();
 -                Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Permissions successfully reloaded.");
-+                Command.broadcastCommandMessage(sender, /*ChatColor.GREEN + */"Permissions successfully reloaded.");
++                Command.broadcastCommandMessage(sender, "Permissions successfully reloaded.");
                  return true;
              } else if ("commands".equalsIgnoreCase(args[0])) {
                  if (Bukkit.getServer().reloadCommandAliases()) {
 -                    Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Command aliases successfully reloaded.");
-+                    Command.broadcastCommandMessage(sender, /*ChatColor.GREEN + */"Command aliases successfully reloaded.");
++                    Command.broadcastCommandMessage(sender, "Command aliases successfully reloaded.");
                  } else {
 -                    Command.broadcastCommandMessage(sender, ChatColor.RED + "An error occurred while trying to reload command aliases.");
-+                    Command.broadcastCommandMessage(sender, /*ChatColor.RED + */"An error occurred while trying to reload command aliases.");
++                    Command.broadcastCommandMessage(sender, "An error occurred while trying to reload command aliases.");
                  }
                  return true;
              } else if ("confirm".equalsIgnoreCase(args[0])) {
                  confirmed = true;
              } else {
 -                Command.broadcastCommandMessage(sender, ChatColor.RED + "Usage: " + usageMessage);
-+                Command.broadcastCommandMessage(sender, /*ChatColor.RED + */"Usage: " + usageMessage);
++                Command.broadcastCommandMessage(sender, "Usage: " + usageMessage);
                  return true;
              }
          }
          if (!confirmed) {
 -            Command.broadcastCommandMessage(sender, ChatColor.RED + "Are you sure you wish to reload your server? Doing so may cause bugs and memory leaks. It is recommended to restart instead of using /reload. To confirm, please type " + ChatColor.YELLOW + "/reload confirm");
-+            Command.broadcastCommandMessage(sender, /*ChatColor.RED + */"Are you sure you wish to reload your server? Doing so may cause bugs and memory leaks. It is recommended to restart instead of using /reload. To confirm, please type /reload confirm");
++            Command.broadcastCommandMessage(sender, "Are you sure you wish to reload your server? Doing so may cause bugs and memory leaks. It is recommended to restart instead of using /reload. To confirm, please type /reload confirm");
              return true;
          }
          // Paper end
  
 -        Command.broadcastCommandMessage(sender, ChatColor.RED + "Please note that this command is not supported and may cause issues when using some plugins.");
 -        Command.broadcastCommandMessage(sender, ChatColor.RED + "If you encounter any issues please use the /stop command to restart your server.");
-+        Command.broadcastCommandMessage(sender, /*ChatColor.RED + */"Please note that this command is not supported and may cause issues when using some plugins.");
-+        Command.broadcastCommandMessage(sender, /*ChatColor.RED + */"If you encounter any issues please restart your server.");
++        Command.broadcastCommandMessage(sender, "Please note that this command is not supported and may cause issues when using some plugins.");
++        Command.broadcastCommandMessage(sender, "If you encounter any issues please restart your server.");
          Bukkit.reload();
 -        Command.broadcastCommandMessage(sender, ChatColor.GREEN + "Reload complete.");
-+        Command.broadcastCommandMessage(sender, /*ChatColor.GREEN + */"Reload complete.");
++        Command.broadcastCommandMessage(sender, "Reload complete.");
  
          return true;
      }
 diff --git a/src/main/java/org/bukkit/command/defaults/VersionCommand.java b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
-index 4c2ddc722a9dc4011906ad9530b13fa9be1d3ff9..16fd77fe5f9b517b1918c3af1e655a6ecb9742e2 100644
+index 4c2ddc722a9dc4011906ad9530b13fa9be1d3ff9..9faa22af3de060d0597026fdbceb32453f554f15 100644
 --- a/src/main/java/org/bukkit/command/defaults/VersionCommand.java
 +++ b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
 @@ -20,7 +20,7 @@ import java.util.concurrent.locks.ReentrantLock;
@@ -87,7 +87,7 @@ index 4c2ddc722a9dc4011906ad9530b13fa9be1d3ff9..16fd77fe5f9b517b1918c3af1e655a6e
      private void describeToSender(@NotNull Plugin plugin, @NotNull CommandSender sender) {
          PluginDescriptionFile desc = plugin.getDescription();
 -        sender.sendMessage(ChatColor.GREEN + desc.getName() + ChatColor.WHITE + " version " + ChatColor.GREEN + desc.getVersion());
-+        sender.sendMessage(/*ChatColor.GREEN + /*desc.getName()/* + ChatColor.WHITE*/ + " version "/* + ChatColor.GREEN*/ + desc.getVersion());
++        sender.sendMessage(desc.getName() + " version " + desc.getVersion());
  
          if (desc.getDescription() != null) {
              sender.sendMessage(desc.getDescription());
@@ -95,7 +95,7 @@ index 4c2ddc722a9dc4011906ad9530b13fa9be1d3ff9..16fd77fe5f9b517b1918c3af1e655a6e
  
          if (desc.getWebsite() != null) {
 -            sender.sendMessage("Website: " + ChatColor.GREEN + desc.getWebsite());
-+            sender.sendMessage("Website: "/* + ChatColor.GREEN*/ + desc.getWebsite());
++            sender.sendMessage("Website: " + desc.getWebsite());
          }
  
          if (!desc.getAuthors().isEmpty()) {
