@@ -7,7 +7,7 @@ Subject: [PATCH] pom changes
 - update dependencies
 
 diff --git a/pom.xml b/pom.xml
-index 7712a8723cddb59829a5181f54098d0bb4083f6e..7983e6b57c4536a42d9da26b7d683701af778f69 100644
+index 7712a8723cddb59829a5181f54098d0bb4083f6e..e2d4bbc360bf8276c6045685719f208cfc47c742 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -3,18 +3,18 @@
@@ -100,7 +100,7 @@ index 7712a8723cddb59829a5181f54098d0bb4083f6e..7983e6b57c4536a42d9da26b7d683701
                  <groupId>org.apache.maven.plugins</groupId>
                  <artifactId>maven-shade-plugin</artifactId>
 -                <version>3.2.1</version>
-+                <version>3.2.4</version>
++                <version>3.3.0</version>
                  <executions>
                      <execution>
                          <phase>package</phase>
@@ -126,7 +126,7 @@ index 7712a8723cddb59829a5181f54098d0bb4083f6e..7983e6b57c4536a42d9da26b7d683701
                          <groupId>org.codehaus.mojo</groupId>
                          <artifactId>animal-sniffer-maven-plugin</artifactId>
 -                        <version>1.18</version>
-+                        <version>1.20</version>
++                        <version>1.21</version>
                          <executions>
                              <execution>
                                  <phase>process-classes</phase>

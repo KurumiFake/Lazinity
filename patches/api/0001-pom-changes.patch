@@ -7,7 +7,7 @@ Subject: [PATCH] pom changes
 - update dependencies
 
 diff --git a/pom.xml b/pom.xml
-index 329ba2f5828afecdfa1eb19518dd4eda2ca5d4ff..09ec964d6a6d1c7fc2225f66e96891c3a1fc55e6 100644
+index 329ba2f5828afecdfa1eb19518dd4eda2ca5d4ff..b23105f6fa6b3b109a7257961c2dfe33ac7d6840 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -3,18 +3,18 @@
@@ -52,7 +52,7 @@ index 329ba2f5828afecdfa1eb19518dd4eda2ca5d4ff..09ec964d6a6d1c7fc2225f66e96891c3
              <scope>provided</scope>
          </dependency>
          <dependency>
-@@ -95,14 +95,14 @@
+@@ -95,67 +95,67 @@
          <dependency>
              <groupId>com.google.guava</groupId>
              <artifactId>guava</artifactId>
@@ -69,7 +69,13 @@ index 329ba2f5828afecdfa1eb19518dd4eda2ca5d4ff..09ec964d6a6d1c7fc2225f66e96891c3
              <scope>compile</scope>
          </dependency>
          <dependency>
-@@ -115,47 +115,47 @@
+             <groupId>net.md-5</groupId>
+             <artifactId>bungeecord-chat</artifactId>
+-            <version>1.16-R0.4</version>
++            <version>1.17-R0.1-SNAPSHOT</version>
+             <type>jar</type>
+             <scope>compile</scope>
+         </dependency>
          <dependency>
              <groupId>org.yaml</groupId>
              <artifactId>snakeyaml</artifactId>
@@ -89,14 +95,14 @@ index 329ba2f5828afecdfa1eb19518dd4eda2ca5d4ff..09ec964d6a6d1c7fc2225f66e96891c3
              <groupId>org.apache.maven.resolver</groupId>
              <artifactId>maven-resolver-connector-basic</artifactId>
 -            <version>1.6.2</version>
-+            <version>1.7.3</version>
++            <version>1.8.0</version>
              <scope>provided</scope>
          </dependency>
          <dependency>
              <groupId>org.apache.maven.resolver</groupId>
              <artifactId>maven-resolver-transport-http</artifactId>
 -            <version>1.6.2</version>
-+            <version>1.7.3</version>
++            <version>1.8.0</version>
              <scope>provided</scope>
          </dependency>
          <!-- annotations -->
@@ -158,7 +164,7 @@ index 329ba2f5828afecdfa1eb19518dd4eda2ca5d4ff..09ec964d6a6d1c7fc2225f66e96891c3
                          <groupId>org.codehaus.plexus</groupId>
                          <artifactId>plexus-compiler-eclipse</artifactId>
 -                        <version>2.8.8</version>
-+                        <version>2.11.1</version>
++                        <version>2.12.0</version>
                      </dependency>
                      <dependency>
                          <groupId>org.eclipse.jdt</groupId>
@@ -181,7 +187,7 @@ index 329ba2f5828afecdfa1eb19518dd4eda2ca5d4ff..09ec964d6a6d1c7fc2225f66e96891c3
                  <groupId>org.apache.maven.plugins</groupId>
                  <artifactId>maven-shade-plugin</artifactId>
 -                <version>3.2.3</version>
-+                <version>3.2.4</version>
++                <version>3.3.0</version>
                  <executions>
                      <execution>
                          <phase>package</phase>
@@ -190,7 +196,7 @@ index 329ba2f5828afecdfa1eb19518dd4eda2ca5d4ff..09ec964d6a6d1c7fc2225f66e96891c3
                  <groupId>org.apache.maven.plugins</groupId>
                  <artifactId>maven-javadoc-plugin</artifactId>
 -                <version>3.2.0</version>
-+                <version>3.3.2</version>
++                <version>3.4.0</version>
                  <configuration>
                      <links>
 -                        <link>https://guava.dev/releases/21.0/api/docs/</link>
@@ -224,7 +230,7 @@ index 329ba2f5828afecdfa1eb19518dd4eda2ca5d4ff..09ec964d6a6d1c7fc2225f66e96891c3
                          <groupId>org.codehaus.mojo</groupId>
                          <artifactId>animal-sniffer-maven-plugin</artifactId>
 -                        <version>1.19</version>
-+                        <version>1.20</version>
++                        <version>1.21</version>
                          <executions>
                              <execution>
                                  <phase>process-classes</phase>

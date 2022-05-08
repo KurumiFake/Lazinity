@@ -5,7 +5,7 @@ Subject: [PATCH] update dependencies
 
 
 diff --git a/pom.xml b/pom.xml
-index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..de74023819bb7efc3d9dcc4476c4b4ea597255f6 100644
+index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..7691643042d47b8959be96eb36b3da37fa0daad9 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -30,7 +30,7 @@
@@ -22,7 +22,7 @@ index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..de74023819bb7efc3d9dcc4476c4b4ea
              <groupId>io.netty</groupId>
              <artifactId>netty-all</artifactId>
 -            <version>4.1.50.Final</version>
-+            <version>4.1.75.Final</version>
++            <version>4.1.77.Final</version>
          </dependency>
          <!-- Tuinity end - fix compile issue (cannot see new api) by moving netty include BEFORE server jar -->
          <dependency>
@@ -89,14 +89,14 @@ index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..de74023819bb7efc3d9dcc4476c4b4ea
              <groupId>org.apache.maven.resolver</groupId>
              <artifactId>maven-resolver-connector-basic</artifactId>
 -            <version>1.6.2</version>
-+            <version>1.7.3</version>
++            <version>1.8.0</version>
              <scope>runtime</scope>
          </dependency>
          <dependency>
              <groupId>org.apache.maven.resolver</groupId>
              <artifactId>maven-resolver-transport-http</artifactId>
 -            <version>1.6.2</version>
-+            <version>1.7.3</version>
++            <version>1.8.0</version>
              <scope>runtime</scope>
          </dependency>
          <dependency>
@@ -114,7 +114,7 @@ index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..de74023819bb7efc3d9dcc4476c4b4ea
              <groupId>io.github.classgraph</groupId>
              <artifactId>classgraph</artifactId>
 -            <version>4.8.47</version>
-+            <version>4.8.143</version>
++            <version>4.8.146</version>
              <scope>test</scope>
          </dependency>
          <!-- for optimized protocol handling -->
