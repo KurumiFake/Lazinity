@@ -5,7 +5,7 @@ Subject: [PATCH] update dependencies
 
 
 diff --git a/pom.xml b/pom.xml
-index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..7691643042d47b8959be96eb36b3da37fa0daad9 100644
+index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..d7bfdfc7d1bed27f00aa1780c05da490fb6d92c3 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -30,7 +30,7 @@
@@ -74,7 +74,7 @@ index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..7691643042d47b8959be96eb36b3da37
              <groupId>mysql</groupId>
              <artifactId>mysql-connector-java</artifactId>
 -            <version>8.0.23</version>
-+            <version>8.0.28</version>
++            <version>8.0.29</version>
              <scope>runtime</scope>
          </dependency>
          <!-- add these back in as they are not exposed by the API -->
@@ -175,7 +175,7 @@ index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..7691643042d47b8959be96eb36b3da37
 -                        <version>2.13.1</version>
 +                        <groupId>io.github.edwgiz</groupId>
 +                        <artifactId>log4j-maven-shade-plugin-extensions</artifactId>
-+                        <version>2.17.1</version>
++                        <version>2.17.2</version>
                      </dependency>
                  </dependencies>
              </plugin>
@@ -189,7 +189,7 @@ index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..7691643042d47b8959be96eb36b3da37
                          <groupId>org.codehaus.plexus</groupId>
                          <artifactId>plexus-compiler-eclipse</artifactId>
 -                        <version>2.8.8</version>
-+                        <version>2.11.1</version>
++                        <version>2.12.0</version>
                      </dependency>
                      <dependency>
                          <groupId>org.eclipse.jdt</groupId>
@@ -229,7 +229,7 @@ index cf30fcf0130edc9a6126ccd5f62dc0b107a6650c..7691643042d47b8959be96eb36b3da37
                          <groupId>org.codehaus.mojo</groupId>
                          <artifactId>animal-sniffer-maven-plugin</artifactId>
 -                        <version>1.19</version>
-+                        <version>1.20</version>
++                        <version>1.21</version>
                          <executions>
                              <execution>
                                  <phase>process-classes</phase>

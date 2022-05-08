@@ -80,15 +80,15 @@ case "$1" in
     )
     ;;
     *)
-        echo "Lazinity build tool command. This provides a variety of commands to build and manage the PaperMC build"
-        echo "environment."
+        echo "Lazinity build tool command."
+        echo "This provides a variety of commands to build and manage the PaperMC build environment."
         echo ""
         echo " Commands:"
-        echo "  * rb, rebuild  | Rebuild patches, can be called from anywhere."
-        echo "  * p, patch     | Apply all patches to top of Paper without building it. Can be run from anywhere."
-        echo "  * up, upstream | Build Paper upstream, pass arg up to update paper. Can be run from anywhere."
-        echo "  * b, build     | Build API and Server but no deploy. Can be ran anywhere."
-        echo "  * d, deploy    | Build and Deploy API jar and build Server. Can be ran anywhere."
+        echo "  * rb, rebuild  | Rebuild patches."
+        echo "  * p, patch     | Apply all patches to top of Paper without building it."
+        echo "  * up, upstream | Build Paper upstream, pass arg up to update paper."
+        echo "  * b, build     | Build API and Server but no deploy."
+        echo "  * d, deploy    | Build and Deploy API jar and build Server."
     ;;
 esac
 
