@@ -30,7 +30,7 @@ jobs:
         name: blak-smok-JDK${{ matrix.java }}
         path: l.tar.gz
     - name: bulid
-      run: ./lazinity jar
+      run: ./lazinity jar fast
     - uses: actions/upload-artifact@v2
       with:
         name: Lazinity-JDK${{ matrix.java }}
