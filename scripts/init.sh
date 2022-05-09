@@ -37,18 +37,12 @@ function pushRepo {
     echo "Pushing - $1 ($3) to $2"
     (
         cd "$1"
-        git remote rm emc-push > /dev/null 2>&1
-        git remote add emc-push $2 >/dev/null 2>&1
-        git push emc-push $3 -f
+        git remote rm lazinity-push > /dev/null 2>&1
+        git remote add lazinity-push $2 >/dev/null 2>&1
+        git push lazinity-push $3 -f
     )
     fi
 }
 function basedir {
     cd "$basedir"
-}
-function gethead {
-    (
-        cd "$1"
-        git log -1 --oneline
-    )
 }

@@ -19,7 +19,7 @@ if [[ "$1" == up* ]]; then
     )
 fi
 
-airplaneVer=$(gethead Airplane)
+airplaneVer=$(cd Airplane && git log -1 --oneline)
 cd "$basedir/Airplane/"
 
 ./airplane p || exit 1
