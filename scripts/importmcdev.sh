@@ -38,10 +38,10 @@ function import {
     if [[ ! -f "$target" ]]; then
         export MODLOG="$MODLOG  Imported $file from mc-dev\n";
         mkdir -p "$(dirname "$target")"
-        echo "$(bashColor 1 32) Copying $(bashColor 1 34)$base $(bashColor 1 32)to$(bashColor 1 34) $target $(bashColorReset)"
+        echo "Copying $base to $target"
         cp "$base" "$target"
     else
-        echo "$(bashColor 1 33) UN-NEEDED IMPORT STATEMENT:$(bashColor 1 34) $file $(bashColorReset)"
+        echo "UN-NEEDED IMPORT STATEMENT: $file "
     fi
 }
 
@@ -84,7 +84,7 @@ for f in $files; do
         if [ ! -f "$basedir/Airplane/Airplane-Server/src/main/java/net/minecraft/$f" ]; then
             f="$(echo "$f" | sed 's/.java//g')"
             if [ ! -f "$decompiledir/$nms/$f.java" ]; then
-                echo "$(bashColor 1 31) ERROR!!! Missing NMS$(bashColor 1 34) $f $(bashColorReset)";
+                echo "ERROR!!! Missing NMS $f";
                 error=true
             else
                 import $f
@@ -103,7 +103,6 @@ fi
 ###############################################################################################
 
 # import Foo
-import world/inventory/ContainerLectern
 ########################################################
 ########################################################
 ########################################################

@@ -73,12 +73,6 @@ function applyPatch {
     fi
 }
 
-function enableCommitSigningIfNeeded {
-    if [[ "$gpgsign" == "true" ]]; then
-        git config commit.gpgsign true
-    fi
-}
-
     echo "Importing MC-DEV"
     ./scripts/importmcdev.sh "$basedir" || exit 1
 (
@@ -88,6 +82,8 @@ function enableCommitSigningIfNeeded {
     enableCommitSigningIfNeeded
 ) || (
     echo "Failed to apply patches"
-    enableCommitSigningIfNeeded
+    if [[ "$gpgsign" == "true" ]]; then
+        git config commit.gpgsign true
+    fi
     exit 1
 ) || exit 1
