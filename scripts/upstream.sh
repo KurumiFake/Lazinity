@@ -13,7 +13,7 @@ git submodule update --init --recursive
 if [[ "$1" == up* ]]; then
     (
         cd "$basedir/Airplane/"
-        git fetch origin ver/1.16.5 && git reset --hard origin/ver/1.16.5
+        git fetch origin ver/1.16 && git reset --hard origin/ver/1.16
         cd ../
         git add Airplane
     )
@@ -22,7 +22,7 @@ fi
 airplaneVer=$(gethead Airplane)
 cd "$basedir/Airplane/"
 
-./airplane p
+./airplane p 2>&1 > /dev/null || exit 1
 
 cd "Airplane-Server"
 mcVer=$(mvn -o org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=minecraft_version | sed -n -e '/^\[.*\]/ !{ /^[0-9]/ { p; q } }')
