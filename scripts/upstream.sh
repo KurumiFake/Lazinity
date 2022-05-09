@@ -22,7 +22,7 @@ fi
 airplaneVer=$(gethead Airplane)
 cd "$basedir/Airplane/"
 
-./airplane p 2>&1 > /dev/null || exit 1
+./airplane p || exit 1
 
 cd "Airplane-Server"
 mcVer=$(mvn -o org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=minecraft_version | sed -n -e '/^\[.*\]/ !{ /^[0-9]/ { p; q } }')
