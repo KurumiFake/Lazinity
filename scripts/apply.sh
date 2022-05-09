@@ -79,7 +79,9 @@ function applyPatch {
     (applyPatch Airplane/Airplane-API ${FORK_NAME}-API HEAD api $API_REPO &&
     applyPatch Airplane/Tuinity/Paper/Paper-MojangAPI ${FORK_NAME}-MojangAPI HEAD mojangapi $MOJANGAPI_REPO &&
     applyPatch Airplane/Airplane-Server ${FORK_NAME}-Server HEAD server $SERVER_REPO) || exit 1
-    enableCommitSigningIfNeeded
+    if [[ "$gpgsign" == "true" ]]; then
+        git config commit.gpgsign true
+    fi
 ) || (
     echo "Failed to apply patches"
     if [[ "$gpgsign" == "true" ]]; then
