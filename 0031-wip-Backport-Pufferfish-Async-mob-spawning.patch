@@ -1,0 +1,187 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Thu, 26 May 2022 10:51:51 +0700
+Subject: [PATCH] wip Backport Pufferfish Async mob spawning
+
+
+diff --git a/src/main/java/com/destroystokyo/paper/util/PlayerMobDistanceMap.java b/src/main/java/com/destroystokyo/paper/util/PlayerMobDistanceMap.java
+index 6124b54d99adbb2a5bb9bb09dfd02522a67ab3ba..4658e8d82a6d6af1be530a2886b23cad5a553059 100644
+--- a/src/main/java/com/destroystokyo/paper/util/PlayerMobDistanceMap.java
++++ b/src/main/java/com/destroystokyo/paper/util/PlayerMobDistanceMap.java
+@@ -18,7 +18,7 @@ public final class PlayerMobDistanceMap {
+ 
+     private final Map<EntityPlayer, SectionPosition> players = new HashMap<>();
+     // we use linked for better iteration.
+-    private final Long2ObjectOpenHashMap<PooledHashSets.PooledObjectLinkedOpenHashSet<EntityPlayer>> playerMap = new Long2ObjectOpenHashMap<>(32, 0.5f);
++    private final java.util.concurrent.ConcurrentHashMap<PooledHashSets.PooledObjectLinkedOpenHashSet<EntityPlayer>> playerMap = new java.util.concurrent.ConcurrentHashMap<>(32, 0.5f); // Pufferfish
+     private int viewDistance;
+ 
+     private final PooledHashSets<EntityPlayer> pooledHashSets = new PooledHashSets<>();
+@@ -75,8 +75,8 @@ public final class PlayerMobDistanceMap {
+         final int centerX = currPosition.getX();
+         final int centerZ = currPosition.getZ();
+ 
+-        for (final Long2ObjectLinkedOpenHashMap.Entry<PooledHashSets.PooledObjectLinkedOpenHashSet<EntityPlayer>> entry : this.playerMap.long2ObjectEntrySet()) {
+-            final long key = entry.getLongKey();
++        for (final Map.Entry<PooledHashSets.PooledObjectLinkedOpenHashSet<EntityPlayer>> entry : this.playerMap.entrySet()) { // Pufferfish
++            final long key = entry.getKey(); // Pufferfish
+             final PooledHashSets.PooledObjectLinkedOpenHashSet<EntityPlayer> map = entry.getValue();
+ 
+             if (map.referenceCount == 0) {
+diff --git a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
+index 14dc3659a32b22462dfb68daab165209c17c5496..3e679b682ce5ac60501fa234b36d2ac4fa20a9f5 100644
+--- a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
++++ b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
+@@ -130,4 +130,16 @@ public final class LazinityConfig {
+     private static void enableBookDeserialization() {
+         enableBookDeserialization = getBoolean("enable-book-deserialization", false);
+     }
++
++    public static boolean enableAsyncMobSpawning;
++    public static boolean asyncMobSpawningInitialized;
++    private static void asyncMobSpawning() {
++        boolean temp = getBoolean("enable-async-mob-spawning", false);
++        // This prevents us from changing the value during a reload.
++        if (!asyncMobSpawningInitialized) {
++            asyncMobSpawningInitialized = true;
++            enableAsyncMobSpawning = temp;
++        }
++    }
++
+ }
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index f41a79ff12b072a23e0d4ad1f62f0719d3b1e605..72e2a0b3dceef6a7498741a4b416b630901209ed 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -285,6 +285,8 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+     public volatile Thread shutdownThread; // Paper
+     public volatile boolean abnormalExit = false; // Paper
+ 
++    public gg.pufferfish.pufferfish.util.AsyncExecutor mobSpawnExecutor = new gg.pufferfish.pufferfish.util.AsyncExecutor("MobSpawning", () -> true); // Pufferfish - optimize mob spawning
++
+     public static <S extends MinecraftServer> S a(Function<Thread, S> function) {
+         AtomicReference<S> atomicreference = new AtomicReference();
+         Thread thread = new Thread(() -> {
+diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
+index 5836c44bbd019a7eeaad875eddad9b953f4d6c92..a60b4c243cd4ef4b6ad545945075b8eda6d106a3 100644
+--- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
++++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
+@@ -332,6 +332,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+                 MinecraftServerBeans.a((MinecraftServer) this);
+             }
+ 
++            if (gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncMobSpawning) mobSpawnExecutor.start(); // Pufferfish
+             return true;
+         }
+     }
+diff --git a/src/main/java/net/minecraft/server/level/ChunkProviderServer.java b/src/main/java/net/minecraft/server/level/ChunkProviderServer.java
+index e31766151450ffa44937feb728f6368e61acd2cd..a986a421d2b07abebb23929690bd880c05c4372a 100644
+--- a/src/main/java/net/minecraft/server/level/ChunkProviderServer.java
++++ b/src/main/java/net/minecraft/server/level/ChunkProviderServer.java
+@@ -74,10 +74,13 @@ public class ChunkProviderServer extends IChunkProvider {
+     private SpawnerCreature.d p;
+     // Paper start
+     final com.destroystokyo.paper.util.concurrent.WeakSeqLock loadedChunkMapSeqLock = new com.destroystokyo.paper.util.concurrent.WeakSeqLock();
+-    final Long2ObjectOpenHashMap<Chunk> loadedChunkMap = new Long2ObjectOpenHashMap<>(8192, 0.5f);
++    final Long2ObjectOpenHashMap<Chunk> loadedChunkMap =  new Long2ObjectOpenHashMap<>(8192, 0.5f);
+ 
+     private final Chunk[] lastLoadedChunks = new Chunk[4 * 4];
+ 
++    public boolean firstRunSpawnCounts = true; // Pufferfish
++    public final java.util.concurrent.atomic.AtomicBoolean _pufferfish_spawnCountsReady = new java.util.concurrent.atomic.AtomicBoolean(false); // Pufferfish - optimize countmobs
++
+     private static int getChunkCacheKey(int x, int z) {
+         return x & 3 | ((z & 3) << 2);
+     }
+@@ -1014,20 +1017,27 @@ public class ChunkProviderServer extends IChunkProvider {
+                 this.world.timings.playerMobDistanceMapUpdate.startTiming();
+                 this.playerChunkMap.playerMobDistanceMap.update(this.world.players, this.playerChunkMap.viewDistance);
+                 this.world.timings.playerMobDistanceMapUpdate.stopTiming();
+-                // re-set mob counts
+-                for (EntityPlayer player : this.world.players) {
+-                    Arrays.fill(player.mobCounts, 0);
++                // Pufferfish start - moved down when async processing
++                if (!me.kurumifake.lazinity.LazinityConfig.enableAsyncMobSpawning) {
++                    // re-set mob counts
++                    for (EntityPlayer player : this.world.players) {
++                        Arrays.fill(player.mobCounts, 0);
++                    }
++                    p = SpawnerCreature.countMobs(l, this.world.A(), this::a, true, this); // Tuinity
+                 }
+-                spawnercreature_d = SpawnerCreature.countMobs(l, this.world.A(), this::a, true, this); // Tuinity
++                // Pufferfish end
+             } else {
+-                spawnercreature_d = SpawnerCreature.countMobs(l, this.world.A(), this::a, false, this); // Tuinity
++                // Pufferfish start - this is only implemented for per-player mob spawning so this makes everything work if this setting is disabled.
++                p = SpawnerCreature.countMobs(l, this.world.A(), this::a, false, this); // Tuinity
++                _pufferfish_spawnCountsReady.set(true);
++                // Pufferfish end
+             }
+             // Paper end
+             this.world.timings.countNaturalMobs.stopTiming(); // Paper - timings
+ 
+             int ticked = 0; // Tuinity - exec chunk tasks during world tick
+ 
+-            this.p = spawnercreature_d;
++            //this.p = spawnercreature_d; // Pufferfish - this is managed asynchronously
+             this.world.getMethodProfiler().exit();
+             //List<PlayerChunk> list = Lists.newArrayList(this.playerChunkMap.f()); // Paper
+             //Collections.shuffle(list); // Paper
+@@ -1056,8 +1066,8 @@ public class ChunkProviderServer extends IChunkProvider {
+ 
+                         if (!this.playerChunkMap.isOutsideOfRange(playerchunk, chunkcoordintpair, false)) { // Paper - optimise isOutsideOfRange
+                             chunk.setInhabitedTime(chunk.getInhabitedTime() + j);
+-                            if (flag1 && (this.allowMonsters || this.allowAnimals) && this.world.getWorldBorder().isInBounds(chunk.getPos()) && !this.playerChunkMap.isOutsideOfRange(playerchunk, chunkcoordintpair, true)) { // Spigot // Paper - optimise isOutsideOfRange
+-                                SpawnerCreature.a(this.world, chunk, spawnercreature_d, this.allowAnimals, this.allowMonsters, flag2);
++                            if (flag1 && (!me.kurumifake.lazinity.LazinityConfig.enableAsyncMobSpawning || _pufferfish_spawnCountsReady.get()) && (this.allowMonsters || this.allowAnimals) && this.world.getWorldBorder().isInBounds(chunk.getPos()) && !this.playerChunkMap.isOutsideOfRange(playerchunk, chunkcoordintpair, true)) { // Spigot // Paper - optimise isOutsideOfRange // Pufferfish
++                                SpawnerCreature.a(this.world, chunk, p, this.allowAnimals, this.allowMonsters, flag2); // Pufferfish
+                             }
+ 
+                             //this.world.timings.chunkTicks.startTiming(); // Spigot // Paper
+@@ -1105,8 +1115,33 @@ public class ChunkProviderServer extends IChunkProvider {
+             }
+         }
+         // Tuinity end - controlled flush for entity tracker packets
++
++        // Pufferfish start - optimize mob spawning
++        if (me.kurumifake.lazinity.LazinityConfig.enableAsyncMobSpawning) {
++            for (EntityPlayer player : this.world.players) {
++                Arrays.fill(player.mobCounts, 0);
++            }
++            if (firstRunSpawnCounts) {
++                firstRunSpawnCounts = false;
++                _pufferfish_spawnCountsReady.set(true);
++            }
++            if (this.playerChunkMap.playerMobDistanceMap != null && _pufferfish_spawnCountsReady.getAndSet(false)) {
++                net.minecraft.server.MinecraftServer.getServer().mobSpawnExecutor.submit(() -> {
++                    int mapped = distanceManager.getNaturalSpawnChunkCount();
++                    com.tuinity.tuinity.util.maplist.IteratorSafeOrderedReferenceSet.Iterator<Entity> objectiterator =
++                            level.entityTickList.entities.iterator(com.tuinity.tuinity.util.maplist.IteratorSafeOrderedReferenceSet.ITERATOR_FLAG_SEE_ADDITIONS);
++                    gg.pufferfish.pufferfish.util.IterableWrapper<Entity> wrappedIterator =
++                            new gg.pufferfish.pufferfish.util.IterableWrapper<>(objectiterator);
++                    lastSpawnState = NaturalSpawner.createState(mapped, wrappedIterator, this::getFullChunk, true);
++                    objectiterator.finishedIterating();
++                    _pufferfish_spawnCountsReady.set(true);
++                });
++            }
++        }
++        // Pufferfish end
+     }
+ 
++
+     private void a(long i, Consumer<Chunk> consumer) {
+         PlayerChunk playerchunk = this.getChunk(i);
+ 
+diff --git a/src/main/java/net/minecraft/world/level/SpawnerCreature.java b/src/main/java/net/minecraft/world/level/SpawnerCreature.java
+index ab6812698757c05c2e923006d4e3370a7d6c4e03..d6b2a68376b4a0b2eb7a83ab3c4ee0fd6bcb86d9 100644
+--- a/src/main/java/net/minecraft/world/level/SpawnerCreature.java
++++ b/src/main/java/net/minecraft/world/level/SpawnerCreature.java
+@@ -183,7 +183,7 @@ public final class SpawnerCreature {
+             int difference = k1 - currEntityCount;
+ 
+             if (worldserver.paperConfig.perPlayerMobSpawns) {
+-                int minDiff = Integer.MAX_VALUE;
++                int minDiff = me.kurumifake.lazinity.LazinityConfig.enableAsyncMobSpawning ? difference : Integer.MAX_VALUE; // Pufferfish - optimize mob spawning
+                 for (EntityPlayer entityplayer : worldserver.getChunkProvider().playerChunkMap.playerMobDistanceMap.getPlayersInRange(chunk.getPos())) {
+                     minDiff = Math.min(limit - worldserver.getChunkProvider().playerChunkMap.getMobCountNear(entityplayer, enumcreaturetype), minDiff);
+                 }
