@@ -6,7 +6,7 @@ Subject: [PATCH] (Dionysus) Use more fastutil data structures
 Use them in more places.
 
 diff --git a/src/main/java/net/minecraft/server/network/HandshakeListener.java b/src/main/java/net/minecraft/server/network/HandshakeListener.java
-index 82540af8170f0b8cb52b13061ae8f956f1a6e46f..40121020aee89b0dd044f2b94a0dd65843d2ead8 100644
+index 82540af8170f0b8cb52b13061ae8f956f1a6e46f..7996e12120752cae66c5f9e8467d6585423ab01f 100644
 --- a/src/main/java/net/minecraft/server/network/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/network/HandshakeListener.java
 @@ -12,8 +12,12 @@ import net.minecraft.network.protocol.login.PacketLoginOutDisconnect;
@@ -41,7 +41,7 @@ index 82540af8170f0b8cb52b13061ae8f956f1a6e46f..40121020aee89b0dd044f2b94a0dd658
                              throttleTracker.put(address, currentTime);
                              IChatBaseComponent chatmessage = org.bukkit.craftbukkit.util.CraftChatMessage.fromString(com.destroystokyo.paper.PaperConfig.connectionThrottleKickMessage, true)[0]; // Paper - Configurable connection throttle kick message // Paper - Fix hex colors not working in some kick messages
                              this.c.sendPacket(new PacketLoginOutDisconnect(chatmessage));
-@@ -64,16 +68,10 @@ public class HandshakeListener implements PacketHandshakingInListener {
+@@ -64,13 +68,7 @@ public class HandshakeListener implements PacketHandshakingInListener {
                              throttleCounter = 0;
  
                              // Cleanup stale entries
@@ -55,8 +55,4 @@ index 82540af8170f0b8cb52b13061ae8f956f1a6e46f..40121020aee89b0dd044f2b94a0dd658
 +                            throttleTracker.object2LongEntrySet().removeIf(entry -> entry.getLongValue() > connectionThrottle); // Dionysus
                          }
                      }
--                    } // Paper - add closing bracket for if check above
-+                    //} // Paper - add closing bracket for if check above // Lazinity - it doesnt exist anymore :D
-                 } catch (Throwable t) {
-                     org.apache.logging.log4j.LogManager.getLogger().debug("Failed to check connection throttle", t);
-                 }
+                     } // Paper - add closing bracket for if check above
