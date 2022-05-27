@@ -37,7 +37,7 @@ index d0211d4f39f9d6af1d751ac66342b42cc6d7ba6d..c7728aa975e955dc679b10e499963b34
      }
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index e9b03b225544e507669dcc2987da163de011c3b1..f41a79ff12b072a23e0d4ad1f62f0719d3b1e605 100644
+index e9b03b225544e507669dcc2987da163de011c3b1..f57a1738ec8856caed88fb1c7b043feb92435b12 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -747,7 +747,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
@@ -94,12 +94,21 @@ index e9b03b225544e507669dcc2987da163de011c3b1..f41a79ff12b072a23e0d4ad1f62f0719
          if (flag) {
              try {
                  this.serverThread.join();
+@@ -1087,7 +1087,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+                 // anything at 3+ won't be caught here but also will trip watchdog....
+                 // tasks are default scheduled at -1 + delay, and first tick will tick at 1
+                 String doneTime = String.format(java.util.Locale.ROOT, "%.3fs", (double) (SystemUtils.getMonotonicNanos() - serverStartTime) / 1.0E9D);
+-                LOGGER.info("Done ({})! For help, type \"help\"", doneTime);
++                LOGGER.info("Done ({})! For help, type \"help\"", doneTime); // Lazinity - kept intact cos pterodactyl defaults
+                 // Paper end
+ 
+                 com.tuinity.tuinity.config.TuinityConfig.createWorldSections = false; // Tuinity - don't let plugin created worlds fill our config
 @@ -1103,7 +1103,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                          long j = i / 50L;
  
                          if (server.getWarnOnOverload()) // CraftBukkit
 -                            MinecraftServer.LOGGER.warn("Can't keep up! Is the server overloaded? Running {}ms or {} ticks behind", i, j);
-+                            MinecraftServer.LOGGER.warn("Can't keep up! Running {}ms or {} ticks behind", i, j);
++                            MinecraftServer.LOGGER.warn("{}ms or {} ticks behind", i, j);
                          this.nextTick += j * 50L;
                          this.lastOverloadTime = this.nextTick;
                      }
@@ -226,3 +235,33 @@ index e62890433ffbe0b4e48942fe6c38b599a19e58fd..3e2952ae688da7aae1723941ed72bf5b
 +                + */( ( tps > 21.0 ) ? "*" : "" ) + Math.min( Math.round( tps * 100.0 ) / 100.0, 20.0 ); // Paper - only print * at 21, we commonly peak to 20.02 as the tick sleep is not accurate enough, stop the noise
      }
  }
+diff --git a/src/main/resources/log4j2.xml b/src/main/resources/log4j2.xml
+index 67da1aa7a21622fb231d19dede3775a282a4a12e..b8203959447bcab959915828a5cb52fe18abba8e 100644
+--- a/src/main/resources/log4j2.xml
++++ b/src/main/resources/log4j2.xml
+@@ -6,21 +6,21 @@
+         </Queue>
+         <TerminalConsole name="TerminalConsole">
+             <PatternLayout>
+-                <LoggerNamePatternSelector defaultPattern="%highlightError{[%d{HH:mm:ss} %level]: [%logger] %paperMinecraftFormatting{%msg}%n%xEx{full}}">
++                <LoggerNamePatternSelector defaultPattern="%highlightError{%d{HH:mm:ss} %level]: %logger] %paperMinecraftFormatting{%msg}%n%xEx{full}}">
+                     <!-- Log root, Minecraft, Mojang and Bukkit loggers without prefix -->
+                     <!-- Disable prefix for various plugins that bypass the plugin logger -->
+                     <PatternMatch key=",net.minecraft.,Minecraft,com.mojang.,com.sk89q.,ru.tehkode.,Minecraft.AWE"
+-                                  pattern="%highlightError{[%d{HH:mm:ss} %level]: %paperMinecraftFormatting{%msg}%n%xEx{full}}" />
++                                  pattern="%highlightError{%d{HH:mm:ss} %level]: %paperMinecraftFormatting{%msg}%n%xEx{full}}" />
+                 </LoggerNamePatternSelector>
+             </PatternLayout>
+         </TerminalConsole>
+         <RollingRandomAccessFile name="File" fileName="logs/latest.log" filePattern="logs/%d{yyyy-MM-dd}-%i.log.gz">
+             <PatternLayout>
+-                <LoggerNamePatternSelector defaultPattern="[%d{HH:mm:ss}] [%t/%level]: [%logger] %paperMinecraftFormatting{%msg}{strip}%n%xEx{full}">
++                <LoggerNamePatternSelector defaultPattern="%d{HH:mm:ss}] %t/%level]: [%logger] %paperMinecraftFormatting{%msg}{strip}%n%xEx{full}">
+                     <!-- Log root, Minecraft, Mojang and Bukkit loggers without prefix -->
+                     <!-- Disable prefix for various plugins that bypass the plugin logger -->
+                     <PatternMatch key=",net.minecraft.,Minecraft,com.mojang.,com.sk89q.,ru.tehkode.,Minecraft.AWE"
+-                                  pattern="[%d{HH:mm:ss}] [%t/%level]: %paperMinecraftFormatting{%msg}{strip}%n%xEx{full}" />
++                                  pattern="%d{HH:mm:ss}] %t/%level]: %paperMinecraftFormatting{%msg}{strip}%n%xEx{full}" />
+                 </LoggerNamePatternSelector>
+             </PatternLayout>
+             <Policies>

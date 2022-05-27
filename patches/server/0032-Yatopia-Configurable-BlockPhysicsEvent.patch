@@ -1,0 +1,36 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Mykyta Komarnytskyy <nkomarn@hotmail.com>
+Date: Sat, 24 Oct 2020 21:12:45 -0500
+Subject: [PATCH] (Yatopia) Configurable BlockPhysicsEvent
+
+Bukkit's BlockPhysicsEvent is *ridiculously* spammy and can easily rack in 1,600 calls/sec on a server with just one player. This hogs a ton of CPU time.
+Paper does alleviate this quite well by only firing if plugins are listening, but a lot of common world protection plugins use this event do not offer toggles for their listeners, which makes Paper's change ineffective for most servers.
+This patch implements a hard toggle for the event.
+
+diff --git a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
+index 11e31838f307441609d62384e0a7ad17315946ed..172711addfb0aa0a402c58b49b025ca07917062d 100644
+--- a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
++++ b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
+@@ -139,4 +139,9 @@ public final class LazinityConfig {
+         criterionTriggerTick = getBoolean("criterion-trigger.tick", criterionTriggerTick);
+         criterionTriggerLocation = getBoolean("criterion-trigger.location", criterionTriggerLocation);
+     }
++
++    public static boolean fireBlockPhysicsEvent = true;
++    private static void fireBlockPhysicsEvent() {
++        fireBlockPhysicsEvent = getBoolean("fire-block-physics-event", true);
++    }
+ }
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index f57a1738ec8856caed88fb1c7b043feb92435b12..d89c79e9790733bf3e2a376fcf8f552f9cb1687e 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -1532,7 +1532,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+ 
+         while (iterator.hasNext()) {
+             WorldServer worldserver = (WorldServer) iterator.next();
+-            worldserver.hasPhysicsEvent =  org.bukkit.event.block.BlockPhysicsEvent.getHandlerList().getRegisteredListeners().length > 0; // Paper
++            worldserver.hasPhysicsEvent = me.kurumifake.lazinity.LazinityConfig.fireBlockPhysicsEvent && org.bukkit.event.block.BlockPhysicsEvent.getHandlerList().getRegisteredListeners().length > 0; // Paper // Yatopia
+             worldserver.hasEntityMoveEvent =  EntityMoveEvent.getHandlerList().getRegisteredListeners().length > 0; // Paper
+             TileEntityHopper.skipHopperEvents = worldserver.paperConfig.disableHopperMoveEvents || org.bukkit.event.inventory.InventoryMoveItemEvent.getHandlerList().getRegisteredListeners().length == 0; // Paper
+ 

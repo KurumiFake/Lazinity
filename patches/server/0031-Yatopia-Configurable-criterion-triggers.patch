@@ -1,0 +1,57 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Mykyta Komarnytskyy <nkomarn@hotmail.com>
+Date: Sat, 24 Oct 2020 21:08:17 -0500
+Subject: [PATCH] (Yatopia) Configurable criterion triggers
+
+This patch adds toggles for three criterion triggers that are called every tick. These can be very unnecessary, and especially in the case of CriterionTriggerEnterBlock, quite heavy.
+
+// KurumiFake - they messed this patch up in their own repo...
+
+diff --git a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
+index 14dc3659a32b22462dfb68daab165209c17c5496..11e31838f307441609d62384e0a7ad17315946ed 100644
+--- a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
++++ b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
+@@ -130,4 +130,13 @@ public final class LazinityConfig {
+     private static void enableBookDeserialization() {
+         enableBookDeserialization = getBoolean("enable-book-deserialization", false);
+     }
++
++    public static boolean criterionTriggerEnterBlock = true;
++    public static boolean criterionTriggerTick = true;
++    public static boolean criterionTriggerLocation = true;
++    private static void criterionTriggers() {
++        criterionTriggerEnterBlock = getBoolean("criterion-trigger.enter-block", criterionTriggerEnterBlock);
++        criterionTriggerTick = getBoolean("criterion-trigger.tick", criterionTriggerTick);
++        criterionTriggerLocation = getBoolean("criterion-trigger.location", criterionTriggerLocation);
++    }
+ }
+diff --git a/src/main/java/net/minecraft/server/level/EntityPlayer.java b/src/main/java/net/minecraft/server/level/EntityPlayer.java
+index c813077455a463dd558076d1d7474829f76b905a..1c44717a6c1586763907893168e490df2be46361 100644
+--- a/src/main/java/net/minecraft/server/level/EntityPlayer.java
++++ b/src/main/java/net/minecraft/server/level/EntityPlayer.java
+@@ -577,6 +577,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+ 
+     @Override
+     protected void a(IBlockData iblockdata) {
++        if (me.kurumifake.lazinity.LazinityConfig.criterionTriggerEnterBlock) // Yatopia
+         CriterionTriggers.d.a(this, iblockdata);
+     }
+ 
+@@ -644,7 +645,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+             }
+         }
+ 
+-        CriterionTriggers.w.a(this);
++        if (me.kurumifake.lazinity.LazinityConfig.criterionTriggerTick) { CriterionTriggers.w.a(this); } // Yatopia
+         if (this.cf != null) {
+             CriterionTriggers.u.a(this, this.cf, this.ticksLived - this.cg);
+         }
+@@ -898,7 +899,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+                 this.playerConnection.sendPacket(new PacketPlayOutExperience(this.exp, this.expTotal, this.expLevel));
+             }
+ 
+-            if (this.ticksLived % 20 == 0) {
++            if (me.kurumifake.lazinity.LazinityConfig.criterionTriggerLocation && this.ticksLived % 20 == 0) {
+                 CriterionTriggers.p.a(this);
+             }
+ 
