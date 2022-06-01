@@ -59,7 +59,7 @@ index 0c7ba0718de2b93d013968ca0fec34ffd423990f..3a0a24af4d0b73ee0ca17e0b8e8dcf81
          return true;
      }
 diff --git a/src/main/java/org/bukkit/command/defaults/VersionCommand.java b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
-index 4c2ddc722a9dc4011906ad9530b13fa9be1d3ff9..9faa22af3de060d0597026fdbceb32453f554f15 100644
+index 4c2ddc722a9dc4011906ad9530b13fa9be1d3ff9..e0596ea71c517199bacfc122d23b3a195e3d6ba8 100644
 --- a/src/main/java/org/bukkit/command/defaults/VersionCommand.java
 +++ b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
 @@ -20,7 +20,7 @@ import java.util.concurrent.locks.ReentrantLock;
@@ -140,7 +140,7 @@ index 4c2ddc722a9dc4011906ad9530b13fa9be1d3ff9..9faa22af3de060d0597026fdbceb3245
          lastCheck = System.currentTimeMillis();
          final Component message = net.kyori.adventure.text.TextComponent.ofChildren(
 -            Component.text("This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")", net.kyori.adventure.text.format.NamedTextColor.WHITE),
-+            Component.text("Running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")", net.kyori.adventure.text.format.NamedTextColor.WHITE),
++            Component.text("Running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (API version " + Bukkit.getBukkitVersion() + ")", net.kyori.adventure.text.format.NamedTextColor.WHITE),
              Component.newline(),
              msg
          );
