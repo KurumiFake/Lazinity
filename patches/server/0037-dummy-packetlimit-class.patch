@@ -1,0 +1,25 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: hpfxd <me@hpfxd.com>
+Date: Sat, 14 May 2022 18:35:58 -0400
+Subject: [PATCH] dummy packetlimit class
+
+https://github.com/hpfxd/PandaSpigot/blob/b1017cd457646c1cf7da99c75d291cd2e7724dd0/patches/server/0053-Add-packet-limiter-config.patch#L17-L21
+Patch licensed under GPLv3
+
+diff --git a/src/main/java/com/destroystokyo/paper/PaperConfig.java b/src/main/java/com/destroystokyo/paper/PaperConfig.java
+index 1e2683e45d17b1f3b35cf7293f413e974eb1022f..d6b4e30dfecd7dc20561c71874a571afbe09dab3 100644
+--- a/src/main/java/com/destroystokyo/paper/PaperConfig.java
++++ b/src/main/java/com/destroystokyo/paper/PaperConfig.java
+@@ -277,6 +277,12 @@ public class PaperConfig {
+         packetInSpamThreshold = getInt("settings.incoming-packet-spam-threshold", 300);
+     }
+ 
++    // Dummy PacketLimit class as ViaVersion checks for the existence of this class
++    // in order to know whether the server has a built-in packet limiter.
++    // See: https://github.com/ViaVersion/ViaVersion/blob/823eb1f3927ae01b3d4ba05c8a83ce34eaf87daf/bukkit/src/main/java/com/viaversion/viaversion/bukkit/platform/PaperViaInjector.java#L71-L73
++    public static final class PacketLimit {
++    }
++
+     public static String flyingKickPlayerMessage = "Flying is not enabled on this server";
+     public static String flyingKickVehicleMessage = "Flying is not enabled on this server";
+     private static void flyingKickMessages() {
