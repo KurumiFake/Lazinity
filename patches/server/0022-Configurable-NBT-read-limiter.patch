@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Fri, 18 Mar 2022 02:49:12 +0000
+Subject: [PATCH] Configurable NBT read limiter
+
+
+diff --git a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
+index ba5f6e80cbfd8326b1786f1fc1a0f6cac4771454..69c0acf96dc6f3ce4c2581c8994e045a17e28c22 100644
+--- a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
++++ b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
+@@ -123,4 +123,9 @@ public final class LazinityConfig {
+     private static void enableBookDeserialization() {
+         enableBookDeserialization = getBoolean("enable-book-deserialization", false);
+     }
++
++    public static long nbtReadLimit;
++    private static void nbtReadLimitC() {
++        nbtReadLimit = getLong("nbt-read-limit", 64000L);
++    }
+ }
+diff --git a/src/main/java/net/minecraft/network/PacketDataSerializer.java b/src/main/java/net/minecraft/network/PacketDataSerializer.java
+index 579eb1260c7266cd41025cff177de4fb00ac0cec..4e2c3080b9a2296c5d3c7185496b094f2c483be7 100644
+--- a/src/main/java/net/minecraft/network/PacketDataSerializer.java
++++ b/src/main/java/net/minecraft/network/PacketDataSerializer.java
+@@ -274,7 +274,7 @@ public class PacketDataSerializer extends ByteBuf {
+ 
+     @Nullable
+     public NBTTagCompound l() {
+-        return this.a(new NBTReadLimiter(2097152L));
++        return this.a(new NBTReadLimiter(me.kurumifake.lazinity.LazinityConfig.nbtReadLimit));
+     }
+ 
+     @Nullable

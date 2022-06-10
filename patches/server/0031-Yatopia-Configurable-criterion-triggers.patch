@@ -8,12 +8,12 @@ This patch adds toggles for three criterion triggers that are called every tick.
 // KurumiFake - they messed this patch up in their own repo...
 
 diff --git a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
-index 14dc3659a32b22462dfb68daab165209c17c5496..11e31838f307441609d62384e0a7ad17315946ed 100644
+index bf4220752d61fc676a5da5beaa0edb8f4698b5f5..da88e1a488f8ecbe76170fa635b07b011d54be36 100644
 --- a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
 +++ b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
-@@ -130,4 +130,13 @@ public final class LazinityConfig {
-     private static void enableBookDeserialization() {
-         enableBookDeserialization = getBoolean("enable-book-deserialization", false);
+@@ -135,4 +135,13 @@ public final class LazinityConfig {
+     private static void nbtReadLimitC() {
+         nbtReadLimit = getLong("nbt-read-limit", 64000L);
      }
 +
 +    public static boolean criterionTriggerEnterBlock = true;
