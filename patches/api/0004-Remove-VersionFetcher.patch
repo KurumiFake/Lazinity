@@ -3,9 +3,10 @@ From: foss-mc <69294560+foss-mc@users.noreply.github.com>
 Date: Mon, 19 Apr 2021 10:51:32 +0000
 Subject: [PATCH] Remove VersionFetcher
 
+Original patch from https://github.com/PatinaMC/Patina
 
 diff --git a/src/main/java/org/bukkit/command/defaults/VersionCommand.java b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
-index e0596ea71c517199bacfc122d23b3a195e3d6ba8..eac2e385fdbe0d571d82058522510cb694054c1d 100644
+index e0596ea71c517199bacfc122d23b3a195e3d6ba8..04eb95c0af23d6ce4e42f46cb81bbf0c3ecaa598 100644
 --- a/src/main/java/org/bukkit/command/defaults/VersionCommand.java
 +++ b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
 @@ -1,6 +1,6 @@
@@ -38,7 +39,7 @@ index e0596ea71c517199bacfc122d23b3a195e3d6ba8..eac2e385fdbe0d571d82058522510cb6
          if (args.length == 0) {
              //sender.sendMessage("This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")"); // Paper - moved to setVersionMessage
 -            sendVersion(sender);
-+            sender.sendMessage("This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")"); // Patina
++            sender.sendMessage("Running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (API version " + Bukkit.getBukkitVersion() + ")"); // Patina // Lazinity
 +            //sendVersion(sender); // Patina - Remove VersionFetcher
          } else {
              StringBuilder name = new StringBuilder();
