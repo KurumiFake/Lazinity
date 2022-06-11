@@ -1,0 +1,32 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: ishland <ishlandmc@yeah.net>
+Date: Sat, 12 Mar 2022 16:03:35 +0100
+Subject: [PATCH] vmp: use linked map for entity trackers for faster iteration
+
+Copyright (c) 2021-2022 ishland
+
+Original code by RelativityMC, licensed under MIT
+You can find the original code on https://github.com/RelativityMC/VMP-fabric (Yarn mappings)
+
+diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
+index f04f9596a40b9222db2182ede512f82f2957dfc7..abdf21d38468f2ad96b3065dcb67a061c48c718c 100644
+--- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
++++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
+@@ -10,6 +10,7 @@ import com.google.common.collect.Queues;
+ import com.google.common.collect.Sets;
+ import com.mojang.datafixers.DataFixer;
+ import com.mojang.datafixers.util.Either;
++import it.unimi.dsi.fastutil.ints.Int2ObjectLinkedOpenHashMap; // Mirai - vmp: use linked map for entity trackers for faster iteration
+ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+ import it.unimi.dsi.fastutil.longs.Long2ByteMap;
+@@ -426,7 +427,8 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+         this.unloadQueue = new LongOpenHashSet();
+         this.u = new AtomicInteger();
+         this.playerMap = new PlayerMap();
+-        this.trackedEntities = new Int2ObjectOpenHashMap();
++        //this.trackedEntities = new Int2ObjectOpenHashMap();
++        this.trackedEntities = new Int2ObjectLinkedOpenHashMap<>(); // Mirai - vmp: use linked map for entity trackers for faster iteration
+         this.z = new Long2ByteOpenHashMap();
+         this.A = new com.destroystokyo.paper.utils.CachedSizeConcurrentLinkedQueue<>(); // Paper - need constant-time size()
+         this.definedStructureManager = definedstructuremanager;
