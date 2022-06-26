@@ -1,0 +1,47 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: 2No2Name <2No2Name@web.de>
+Date: Sun, 9 Jan 2022 06:03:28 +0100
+Subject: [PATCH] lithium: entity.fast_hand_swing
+
+Original code by CaffeineMC, licensed under GNU Lesser General Public License v3.0
+You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
+
+diff --git a/0074-lithium-entity.fast_hand_swing.patch b/0074-lithium-entity.fast_hand_swing.patch
+new file mode 100644
+index 0000000000000000000000000000000000000000..9620460c0af4fb282e6f2581d83f9a586c33a7ea
+--- /dev/null
++++ b/0074-lithium-entity.fast_hand_swing.patch
+@@ -0,0 +1,21 @@
++From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
++From: 2No2Name <2No2Name@web.de>
++Date: Sun, 9 Jan 2022 06:03:28 +0100
++Subject: [PATCH] lithium: entity.fast_hand_swing
++
++Original code by CaffeineMC, licensed under GNU Lesser General Public License v3.0
++You can find the original code on https://github.com/CaffeineMC/lithium-fabric (Yarn mappings)
++
++diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
++index add84a30460e80259b452f105f81394696c90120..48337a93af6792ce40fded0cb64f2f59c1e7995f 100644
++--- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
+++++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
++@@ -2431,6 +2431,8 @@ public abstract class LivingEntity extends Entity {
++     }
++ 
++     protected void updateSwingTime() {
+++        if (!this.swinging && this.swingTime == 0) return; // Mirai
+++
++         int i = this.getCurrentSwingDuration();
++ 
++         if (this.swinging) {
+diff --git a/src/main/java/net/minecraft/world/entity/EntityLiving.java b/src/main/java/net/minecraft/world/entity/EntityLiving.java
+index 757574ff2ff18fbf5cf46d72ca78cd70309f3f1d..1a64847147e78cc24af3eb0d9ddb732253858037 100644
+--- a/src/main/java/net/minecraft/world/entity/EntityLiving.java
++++ b/src/main/java/net/minecraft/world/entity/EntityLiving.java
+@@ -2130,6 +2130,7 @@ public abstract class EntityLiving extends Entity {
+     }
+ 
+     protected void dA() {
++        if (!this.ai && this.ak == 0) return; // Mirai
+         int i = this.m();
+ 
+         if (this.ai) {
