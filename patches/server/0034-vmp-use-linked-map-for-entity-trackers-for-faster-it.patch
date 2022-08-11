@@ -9,7 +9,7 @@ Original code by RelativityMC, licensed under MIT
 You can find the original code on https://github.com/RelativityMC/VMP-fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-index f04f9596a40b9222db2182ede512f82f2957dfc7..abdf21d38468f2ad96b3065dcb67a061c48c718c 100644
+index fc687515fdfd47e90e11a2832de07d784edeef25..031536afafdbb00eb870dee7d5901a248241dfcb 100644
 --- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 @@ -10,6 +10,7 @@ import com.google.common.collect.Queues;

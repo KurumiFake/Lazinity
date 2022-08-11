@@ -1,0 +1,91 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Kevin Raneri <kevin.raneri@gmail.com>
+Date: Thu, 2 Jun 2022 19:54:09 -0500
+Subject: [PATCH] (Pufferfish) Entity TTL
+
+Original code by pufferfish-gg, licensed under GPLv3
+You can find the original code on https://github.com/pufferfish-gg/Pufferfish
+
+diff --git a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
+index c8c537b3739aa8f4aa26cdeb3738b5cc292b7457..4caeaad3931848cd5bd8f3e163aa45b2c36fec3d 100644
+--- a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
++++ b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
+@@ -2,11 +2,16 @@ package me.kurumifake.lazinity;
+ 
+ import org.bukkit.Bukkit;
+ import org.bukkit.configuration.file.YamlConfiguration;
++import org.bukkit.entity.EntityType;
+ 
+ import java.io.File;
+ import java.lang.reflect.Method;
+ import java.lang.reflect.Modifier;
++import java.net.URI;
++import java.util.EnumMap;
+ import java.util.logging.Level;
++import java.util.Locale;
++import java.util.Map;
+ 
+ public final class LazinityConfig {
+ 
+@@ -160,4 +165,18 @@ public final class LazinityConfig {
+     private static void allowServerMetrics() {
+         serverMetrics = getBoolean("bstats-metrics", serverMetrics);
+     }
++
++    public static Map<EntityType, Integer> projectileTimeouts = new EnumMap<>(EntityType.class);
++    private static void projectileTimeouts() {
++        // Set some defaults
++        getInt("entity_timeouts.SNOWBALL", -1);
++
++        for (EntityType entityType : EntityType.values()) {
++            int value = config.getInt("entity_timeouts." + entityType.name(), -1);
++
++            if (value >= 0) {
++                projectileTimeouts.put(entityType, value);
++            }
++        }
++    }
+ }
+diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
+index 642af003959664ca5d571c37e897b2f3b696220d..038079827783d300815de14252c8e8b8148b19dc 100644
+--- a/src/main/java/net/minecraft/world/entity/Entity.java
++++ b/src/main/java/net/minecraft/world/entity/Entity.java
+@@ -118,6 +118,7 @@ import org.bukkit.Bukkit;
+ import org.bukkit.Location;
+ import org.bukkit.Server;
+ import org.bukkit.block.BlockFace;
++import org.bukkit.entity.EntityType;
+ import org.bukkit.command.CommandSender;
+ import org.bukkit.craftbukkit.event.CraftPortalEvent;
+ import org.bukkit.entity.Hanging;
+@@ -436,6 +437,8 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, ne
+     }
+     // Tuinity end
+ 
++    public int ttl; // Pufferfish
++
+     public Entity(EntityTypes<?> entitytypes, World world) {
+         this.id = Entity.entityCount.incrementAndGet();
+         this.passengers = Lists.newArrayList();
+@@ -477,6 +480,8 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, ne
+         this.initDatawatcher();
+         this.getDataWatcher().registrationLocked = true; // Spigot
+         this.headHeight = this.getHeadHeight(EntityPose.STANDING, this.size);
++
++        ttl = me.kurumifake.lazinity.LazinityConfig.projectileTimeouts.getOrDefault(EntityType.fromId(getId()), -1); // Pufferfish
+     }
+ 
+     public boolean isSpectator() {
+@@ -630,6 +635,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, ne
+     // CraftBukkit end
+ 
+     public void entityBaseTick() {
++        // Pufferfish start - entity TTL
++        if (!(this instanceof EntityPlayer) && ttl >= 0 && this.ticksLived >= ttl) {
++            die();
++            return;
++        }
++        // Pufferfish end - entity TTL
+         this.world.getMethodProfiler().enter("entityBaseTick");
+         if (this.isPassenger() && this.getVehicle().dead) {
+             this.stopRiding();

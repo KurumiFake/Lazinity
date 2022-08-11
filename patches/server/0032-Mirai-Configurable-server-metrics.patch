@@ -18,10 +18,10 @@ index 7a86357ea75db7263598b79d31d4ae9abe5e4b50..1e2683e45d17b1f3b35cf7293f413e97
              metricsStarted = true;
          }
 diff --git a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
-index fedac8069ec87c3e9bc7e5a0a7381e362734bb5b..3d58dd42f02670ea24d90417e6e75cd78dc86eab 100644
+index fa72e74de910bd82812998957de662998d2113eb..c8c537b3739aa8f4aa26cdeb3738b5cc292b7457 100644
 --- a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
 +++ b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
-@@ -160,4 +160,9 @@ public final class LazinityConfig {
+@@ -155,4 +155,9 @@ public final class LazinityConfig {
          checkVehicleMovedQuickly = getBoolean("movement-checks.vehicle-moved-quickly", checkVehicleMovedQuickly);
          checkVehicleMovedWrongly = getBoolean("movement-checks.vehicle-moved-wrongly", checkVehicleMovedWrongly);
      }

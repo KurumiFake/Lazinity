@@ -8,10 +8,10 @@ Paper does alleviate this quite well by only firing if plugins are listening, bu
 This patch implements a hard toggle for the event.
 
 diff --git a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
-index da88e1a488f8ecbe76170fa635b07b011d54be36..a4ab3ef6e89033fc47f3d2339b0827207fe05b22 100644
+index 11e31838f307441609d62384e0a7ad17315946ed..172711addfb0aa0a402c58b49b025ca07917062d 100644
 --- a/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
 +++ b/src/main/java/me/kurumifake/lazinity/LazinityConfig.java
-@@ -144,4 +144,9 @@ public final class LazinityConfig {
+@@ -139,4 +139,9 @@ public final class LazinityConfig {
          criterionTriggerTick = getBoolean("criterion-trigger.tick", criterionTriggerTick);
          criterionTriggerLocation = getBoolean("criterion-trigger.location", criterionTriggerLocation);
      }
@@ -22,7 +22,7 @@ index da88e1a488f8ecbe76170fa635b07b011d54be36..a4ab3ef6e89033fc47f3d2339b082720
 +    }
  }
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f57a1738ec8856caed88fb1c7b043feb92435b12..d89c79e9790733bf3e2a376fcf8f552f9cb1687e 100644
+index e9b03b225544e507669dcc2987da163de011c3b1..b34588bec64d2dd3efffb1f0f3002caee6f1a67a 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -1532,7 +1532,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
